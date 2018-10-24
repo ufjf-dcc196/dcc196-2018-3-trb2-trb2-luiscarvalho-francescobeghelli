@@ -10,6 +10,7 @@ import android.widget.ScrollView;
 public class MainActivity extends AppCompatActivity {
 
     private Button btnCadPart;
+    private Button btnCadEvent;
     private ScrollView scrView;
 
     @Override
@@ -18,11 +19,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btnCadPart = (Button)findViewById(R.id.btnCadParticipante);
+        btnCadEvent = (Button)findViewById(R.id.btnCadEvento);
 
         btnCadPart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,CadastroParticipanteActivity.class);
+                startActivity(i);
+            }
+        });
+
+        btnCadEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this,CadastroEventoActivity.class);
                 startActivity(i);
             }
         });

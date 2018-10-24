@@ -17,11 +17,13 @@ public class CadastroPartDbHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CadastroPartContract.CadastroParticipante.CREATE_CADPARTICIPANTE);
+        db.execSQL(CadastroEventoContract.CadastroEvento.CREATE_CADEVENTO);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(CadastroPartContract.CadastroParticipante.DROP_CADPARTICIPANTE);
+        db.execSQL(CadastroEventoContract.CadastroEvento.DROP_CADEVENTO);
         onCreate(db);
     }
 
