@@ -25,8 +25,10 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_CREATE_EVENT = 2;
 
     private RecyclerView lstParticipantes;
+    private RecyclerView lstEventos;
 
-    private static ParticipanteAdapter adapter;
+    private static ParticipanteAdapter adapterPart;
+    private static ParticipanteAdapter adapterEvent;
 
 
 
@@ -56,11 +58,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         lstParticipantes = (RecyclerView)findViewById(R.id.lstParticipantes);
-        adapter = new ParticipanteAdapter(participanteList);
-        lstParticipantes.setAdapter(adapter);
+        lstEventos = (RecyclerView)findViewById(R.id.lstEventos);
+        adapterPart = new ParticipanteAdapter(participanteList);
+        lstParticipantes.setAdapter(adapterPart);
         lstParticipantes.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter.setOnParticClickListener(new ParticipanteAdapter.OnParticClickListener() {
+        adapterPart.setOnParticClickListener(new ParticipanteAdapter.OnParticClickListener() {
             @Override
             public void onParticClick(View particView, int position) {
                 Intent i = new Intent(MainActivity.this,CadastrarPartEventActivity.class);
