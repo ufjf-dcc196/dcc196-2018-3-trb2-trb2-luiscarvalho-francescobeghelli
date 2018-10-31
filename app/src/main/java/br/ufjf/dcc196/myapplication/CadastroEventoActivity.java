@@ -24,12 +24,12 @@ public class CadastroEventoActivity extends AppCompatActivity {
         edtDia = (EditText)findViewById(R.id.edtDiaCadEvento);
         edtHorario = (EditText)findViewById(R.id.edtHorarioCadEvento);
         edtFacilit = (EditText)findViewById(R.id.edtFacilitadorCadEvento);
-        edtHorario = (EditText)findViewById(R.id.edtDescricaoCadEvento);
+        edtDesc = (EditText)findViewById(R.id.edtDescricaoCadEvento);
+        btnCadastrarEvento = (Button) findViewById(R.id.btnCadastrarEvento);
 
         btnCadastrarEvento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 finish();
             }
         });
