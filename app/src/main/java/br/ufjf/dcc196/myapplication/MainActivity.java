@@ -2,14 +2,13 @@ package br.ufjf.dcc196.myapplication;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ScrollView;
 
 import java.util.ArrayList;
 
@@ -17,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnCadPart;
     private Button btnCadEvent;
-    private ScrollView scrView;
+
 
     private static ArrayList<Participante> participanteList = new ArrayList<Participante>();
     private static ArrayList<Evento> eventoList = new ArrayList<Evento>();
@@ -26,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_CREATE_EVENT = 2;
 
     private RecyclerView lstParticipantes;
+
+    private static ParticipanteAdapter adapter;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +56,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
         lstParticipantes = (RecyclerView)findViewById(R.id.lstParticipantes);
-        ParticipanteAdapter adapter = new ParticipanteAdapter(participanteList);
+        adapter = new ParticipanteAdapter(participanteList);
         lstParticipantes.setAdapter(adapter);
         lstParticipantes.setLayoutManager(new LinearLayoutManager(this));
+
+        adapter.setOnParticClickListener(new ParticipanteAdapter.OnParticClickListener() {
+            @Override
+            public void onParticClick(View particView, int position) {
+                Intent i = new Intent(MainActivity.this,CadastrarPartEventActivity.class);
+                startActivityForResult(i, REQUEST_CREATE_PERSON);
+            }
+        });
     }
 
     @Override

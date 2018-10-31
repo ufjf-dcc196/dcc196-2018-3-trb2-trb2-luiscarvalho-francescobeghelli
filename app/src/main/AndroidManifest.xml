@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".CadastroParticipanteActivity" />
-        <activity android:name=".CadastroEventoActivity"></activity>
+        <activity android:name=".CadastroEventoActivity" />
+        <activity android:name=".CadastrarPartEventActivity"></activity>
     </application>
 
 </manifest>
