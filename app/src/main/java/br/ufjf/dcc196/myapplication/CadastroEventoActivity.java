@@ -42,6 +42,7 @@ public class CadastroEventoActivity extends AppCompatActivity {
                     intent.putExtra("facilitador",edtFacilit.getText().toString());
                     intent.putExtra("descricao",edtDesc.getText().toString());
                     setResult(Activity.RESULT_OK, intent);
+                    Toast.makeText(CadastroEventoActivity.this,"Evento salvo com sucesso", Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 else

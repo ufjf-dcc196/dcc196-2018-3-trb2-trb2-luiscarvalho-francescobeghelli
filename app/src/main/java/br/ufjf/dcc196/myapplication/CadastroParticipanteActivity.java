@@ -36,6 +36,7 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
                     intent.putExtra("cpf",edtCpf.getText().toString());
                     intent.putExtra("email",edtEmail.getText().toString());
                     setResult(Activity.RESULT_OK, intent);
+                    Toast.makeText(CadastroParticipanteActivity.this,"Participante salvo com sucesso", Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 else

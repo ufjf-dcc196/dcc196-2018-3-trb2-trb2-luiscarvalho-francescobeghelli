@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
@@ -22,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_CREATE_PERSON = 1;
     public static final int REQUEST_CREATE_EVENT = 2;
+
+    private RecyclerView lstParticipantes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(i, REQUEST_CREATE_EVENT);
             }
         });
+
+        lstParticipantes = (RecyclerView)findViewById(R.id.lstParticipantes);
+        ParticipanteAdapter adapter = new ParticipanteAdapter(participanteList);
+        lstParticipantes.setAdapter(adapter);
+        lstParticipantes.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -63,5 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void handleParticipanteCad(Intent data) {
         participanteList.add(new Participante(data.getStringExtra("nome"),data.getStringExtra("cpf"),data.getStringExtra("email")));
+        lstParticipantes.swapAdapter(new ParticipanteAdapter(participanteList), false);
     }
 }
