@@ -18,8 +18,10 @@ public class MainActivity extends AppCompatActivity {
     private ScrollView scrView;
 
     private static ArrayList<Participante> participanteList = new ArrayList<Participante>();
+    private static ArrayList<Evento> eventoList = new ArrayList<Evento>();
 
     public static final int REQUEST_CREATE_PERSON = 1;
+    public static final int REQUEST_CREATE_EVENT = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode == REQUEST_CREATE_PERSON && resultCode == Activity.RESULT_OK && data != null)
             handleParticipanteCad(data);
+        if(requestCode == REQUEST_CREATE_EVENT && resultCode == Activity.RESULT_OK && data != null)
+            handleEventoCad(data);
+    }
+
+    private void handleEventoCad(Intent data) {
+        eventoList.add(new Evento(data.getStringExtra("titulo"),data.getStringExtra("dia"),data.getStringExtra("horario"),
+                data.getStringExtra("facilitador"),data.getStringExtra("descricao")));
     }
 
     private void handleParticipanteCad(Intent data) {
