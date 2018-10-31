@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,CadastroEventoActivity.class);
-                startActivity(i);
+                startActivityForResult(i, REQUEST_CREATE_EVENT);
             }
         });
     }
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode == REQUEST_CREATE_PERSON && resultCode == Activity.RESULT_OK && data != null)
             handleParticipanteCad(data);
-        if(requestCode == REQUEST_CREATE_EVENT && resultCode == Activity.RESULT_OK && data != null)
+        else if(requestCode == REQUEST_CREATE_EVENT && resultCode == Activity.RESULT_OK && data != null)
             handleEventoCad(data);
     }
 
