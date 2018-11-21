@@ -2,6 +2,8 @@ package br.ufjf.dcc196.myapplication;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,8 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnCadPart;
     private Button btnCadEvent;
 
-
-    private static ArrayList<Participante> participanteList = new ArrayList<Participante>();
+    private SQLiteDatabase db;
     private static ArrayList<Evento> eventoList = new ArrayList<Evento>();
 
     public static final int REQUEST_CREATE_PERSON = 1;
@@ -31,12 +32,12 @@ public class MainActivity extends AppCompatActivity {
     private static ParticipanteAdapter adapterEvent;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        db = new ParticipanteEventoDbHelper(MainActivity.this).getWritableDatabase();
 
         btnCadPart = (Button)findViewById(R.id.btnCadParticipante);
         btnCadEvent = (Button)findViewById(R.id.btnCadEvento);
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         lstParticipantes = (RecyclerView)findViewById(R.id.lstParticipantes);
         lstEventos = (RecyclerView)findViewById(R.id.lstEventos);
-        adapterPart = new ParticipanteAdapter(participanteList);
+        adapterPart = new ParticipanteAdapter(getParticipanteCursor());
         lstParticipantes.setAdapter(adapterPart);
         lstParticipantes.setLayoutManager(new LinearLayoutManager(this));
 
@@ -74,19 +75,23 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode == REQUEST_CREATE_PERSON && resultCode == Activity.RESULT_OK && data != null)
-            handleParticipanteCad(data);
-        else if(requestCode == REQUEST_CREATE_EVENT && resultCode == Activity.RESULT_OK && data != null)
-            handleEventoCad(data);
+        if(requestCode == REQUEST_CREATE_PERSON && resultCode == Activity.RESULT_OK)
+            handleParticipanteCad();
+        else if(requestCode == REQUEST_CREATE_EVENT && resultCode == Activity.RESULT_OK )
+            handleEventoCad();
     }
 
-    private void handleEventoCad(Intent data) {
-        eventoList.add(new Evento(data.getStringExtra("titulo"),data.getStringExtra("dia"),data.getStringExtra("horario"),
-                data.getStringExtra("facilitador"),data.getStringExtra("descricao")));
+    private void handleEventoCad() {
+
     }
 
-    private void handleParticipanteCad(Intent data) {
-        participanteList.add(new Participante(data.getStringExtra("nome"),data.getStringExtra("cpf"),data.getStringExtra("email")));
-        lstParticipantes.swapAdapter(new ParticipanteAdapter(participanteList), false);
+    private void handleParticipanteCad() {
+        lstParticipantes.swapAdapter(new ParticipanteAdapter(getParticipanteCursor()), false);
+    }
+
+    private Cursor getParticipanteCursor()
+    {
+        return db.query(ParticipanteContract.Participante.TABLE_NAME, new String[] {ParticipanteContract.Participante.COLUMN_NAME_NOME, ParticipanteContract.Participante.COLUMN_NAME_CPF,
+                ParticipanteContract.Participante.COLUMN_NAME_EMAIL }, null,null,null,null,null,null);
     }
 }

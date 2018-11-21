@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapter.ViewHolder> {
 
-    private ArrayList<Participante> itens;
     private Cursor cursor;
     private OnParticClickListener listener;
 
@@ -34,11 +33,6 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
         this.listener = listener;
     }
 
-
-    public ParticipanteAdapter(ArrayList<Participante> itens) {
-        this.itens = itens;
-    }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -52,26 +46,14 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Participante p = itens.get(i);
-        TextView itemNome = viewHolder.txtNomeParticipante;
-        itemNome.setText(p.getNome());
-        TextView itemEmail = viewHolder.txtEmailParticipante;
-        itemEmail.setText(p.getEmail());
-        TextView itemCpf = viewHolder.txtCpfParticipante;
-        itemCpf.setText(p.getCpf());
-
-        int idxTitulo = cursor.getColumnIndexOrThrow(CadastroPartContract.CadastroParticipante.COLUMN_NAME_NOME);
-        int idxAutor = cursor.getColumnIndexOrThrow(CadastroPartContract.CadastroParticipante.COLUMN_NAME_EMAIL);
-        int idxAno = cursor.getColumnIndexOrThrow(CadastroPartContract.CadastroParticipante.COLUMN_NAME_CPF);
+        int idxTitulo = cursor.getColumnIndexOrThrow(ParticipanteContract.Participante.COLUMN_NAME_NOME);
         cursor.moveToPosition(i);
         viewHolder.txtNomeParticipante.setText(cursor.getString(idxTitulo));
-        viewHolder.txtEmailParticipante.setText(cursor.getString(idxAutor));
-        viewHolder.txtCpfParticipante.setText(cursor.getString(idxAno));
     }
 
     @Override
     public int getItemCount() {
-        return itens.size();
+        return cursor.getCount();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

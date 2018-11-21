@@ -1,8 +1,8 @@
 package br.ufjf.dcc196.myapplication;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.provider.Telephony;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,20 +29,36 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validateEntry())
+                try
                 {
-                    Intent intent = new Intent();
-                    intent.putExtra("nome",edtNome.getText().toString());
-                    intent.putExtra("cpf",edtCpf.getText().toString());
-                    intent.putExtra("email",edtEmail.getText().toString());
-                    setResult(Activity.RESULT_OK, intent);
-                    Toast.makeText(CadastroParticipanteActivity.this,"Participante salvo com sucesso", Toast.LENGTH_SHORT).show();
-                    finish();
+                    if(validateEntry())
+                    {
+                        saveParticipantes();
+
+                        setResult(Activity.RESULT_OK);
+                        Toast.makeText(CadastroParticipanteActivity.this,"Participante salvo com sucesso", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                    else
+                        Toast.makeText(CadastroParticipanteActivity.this,"Por favor preencha todos os campos", Toast.LENGTH_LONG).show();
                 }
-                else
-                    Toast.makeText(CadastroParticipanteActivity.this,"Por favor preencha todos os campos", Toast.LENGTH_LONG).show();
+                catch(Exception er)
+                {
+                    Toast.makeText(CadastroParticipanteActivity.this,"Ocorreu um erro ao salvar", Toast.LENGTH_LONG).show();
+                }
             }
         });
+    }
+
+    private void saveParticipantes() {
+        SQLiteDatabase db = new ParticipanteEventoDbHelper(CadastroParticipanteActivity.this).getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(ParticipanteContract.Participante.COLUMN_NAME_CPF, edtCpf.getText().toString());
+        cv.put(ParticipanteContract.Participante.COLUMN_NAME_EMAIL, edtEmail.getText().toString());
+        cv.put(ParticipanteContract.Participante.COLUMN_NAME_NOME, edtNome.getText().toString());
+
+        db.insert(ParticipanteContract.Participante.TABLE_NAME,null, cv);
     }
 
     private boolean validateEntry()

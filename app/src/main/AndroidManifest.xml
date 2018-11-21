@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".CadastroParticipanteActivity" />
         <activity android:name=".CadastroEventoActivity" />
-        <activity android:name=".CadastrarPartEventActivity"></activity>
+        <activity android:name=".CadastrarPartEventActivity" />
+        <activity android:name=".ParticipanteDetailsActivity"></activity>
     </application>
 
 </manifest>

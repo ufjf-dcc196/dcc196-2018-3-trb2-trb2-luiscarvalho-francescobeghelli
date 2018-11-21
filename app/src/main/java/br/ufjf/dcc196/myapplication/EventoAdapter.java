@@ -64,11 +64,11 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
         TextView itemDescricao = viewHolder.txtDescricaoEvento;
         itemDescricao.setText(e.getDescricao());
 
-        int idxTitulo = cursor.getColumnIndexOrThrow(CadastroEventoContract.CadastroEvento.COLUMN_NAME_TITULO);
-        int idxDia = cursor.getColumnIndexOrThrow(CadastroEventoContract.CadastroEvento.COLUMN_NAME_DIA);
-        int idxHorario = cursor.getColumnIndexOrThrow(CadastroEventoContract.CadastroEvento.COLUMN_NAME_HORARIO);
-        int idxFacilitador = cursor.getColumnIndexOrThrow(CadastroEventoContract.CadastroEvento.COLUMN_NAME_FACILIT);
-        int idxDescricao = cursor.getColumnIndexOrThrow(CadastroEventoContract.CadastroEvento.COLUMN_NAME_DESC);
+        int idxTitulo = cursor.getColumnIndexOrThrow(EventoContract.Evento.COLUMN_NAME_TITULO);
+        int idxDia = cursor.getColumnIndexOrThrow(EventoContract.Evento.COLUMN_NAME_DIA);
+        int idxHorario = cursor.getColumnIndexOrThrow(EventoContract.Evento.COLUMN_NAME_HORARIO);
+        int idxFacilitador = cursor.getColumnIndexOrThrow(EventoContract.Evento.COLUMN_NAME_FACILIT);
+        int idxDescricao = cursor.getColumnIndexOrThrow(EventoContract.Evento.COLUMN_NAME_DESC);
         cursor.moveToPosition(i);
         viewHolder.txtTituloEvento.setText(cursor.getString(idxTitulo));
         viewHolder.txtDiaEvento.setText(cursor.getString(idxDia));
