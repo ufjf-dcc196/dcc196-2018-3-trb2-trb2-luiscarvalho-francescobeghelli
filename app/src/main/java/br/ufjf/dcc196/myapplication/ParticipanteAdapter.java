@@ -20,11 +20,6 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
         cursor = c;
     }
 
-    public void setCursor(Cursor c){
-        cursor = c;
-        notifyDataSetChanged();
-    }
-
     public interface OnParticClickListener {
         void onParticClick(View particView, int position);
     }
@@ -59,17 +54,11 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView txtNomeParticipante;
-        public TextView txtEmailParticipante;
-        public TextView txtCpfParticipante;
-
 
 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             txtNomeParticipante = (TextView)itemView.findViewById(R.id.txtNomeParticipante);
-            txtEmailParticipante = (TextView)itemView.findViewById(R.id.txtNomeParticipante);
-            txtCpfParticipante = (TextView)itemView.findViewById(R.id.txtNomeParticipante);
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
