@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
     private Button btnCadEvent;
 
     private SQLiteDatabase db;
-    private static ArrayList<Evento> eventoList = new ArrayList<Evento>();
 
     public static final int REQUEST_CREATE_PERSON = 1;
     public static final int REQUEST_CREATE_EVENT = 2;
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView lstEventos;
 
     private static ParticipanteAdapter adapterPart;
-    private static ParticipanteAdapter adapterEvent;
+    private static EventoAdapter adapterEvent;
 
 
     @Override
@@ -59,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         lstParticipantes = (RecyclerView)findViewById(R.id.lstParticipantes);
-        lstEventos = (RecyclerView)findViewById(R.id.lstEventos);
         adapterPart = new ParticipanteAdapter(getParticipanteCursor());
         lstParticipantes.setAdapter(adapterPart);
         lstParticipantes.setLayoutManager(new LinearLayoutManager(this));
@@ -71,6 +69,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(i, REQUEST_CREATE_PERSON);
             }
         });
+
+        lstEventos = (RecyclerView)findViewById(R.id.lstEventos);
+        adapterEvent = new EventoAdapter(getEventoCursor());
+        lstEventos.setAdapter(adapterEvent);
+        lstEventos.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -82,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleEventoCad() {
-
+        lstEventos.swapAdapter(new ParticipanteAdapter(getEventoCursor()), false);
     }
 
     private void handleParticipanteCad() {
@@ -93,5 +96,11 @@ public class MainActivity extends AppCompatActivity {
     {
         return db.query(ParticipanteContract.Participante.TABLE_NAME, new String[] {ParticipanteContract.Participante.COLUMN_NAME_NOME, ParticipanteContract.Participante.COLUMN_NAME_CPF,
                 ParticipanteContract.Participante.COLUMN_NAME_EMAIL }, null,null,null,null,null,null);
+    }
+
+    private Cursor getEventoCursor()
+    {
+        return db.query(EventoContract.Evento.TABLE_NAME, new String[] {EventoContract.Evento.COLUMN_NAME_TITULO, EventoContract.Evento.COLUMN_NAME_HORARIO,
+                EventoContract.Evento.COLUMN_NAME_DESC, EventoContract.Evento.COLUMN_NAME_FACILIT, EventoContract.Evento.COLUMN_NAME_DIA }, null,null,null,null,null,null);
     }
 }
