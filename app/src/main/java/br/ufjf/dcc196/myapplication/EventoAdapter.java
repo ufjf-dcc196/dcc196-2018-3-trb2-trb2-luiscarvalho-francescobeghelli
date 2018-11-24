@@ -34,7 +34,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
         Context ctx = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(ctx);
 
-        View itemView = inflater.inflate(R.layout.item_participante, viewGroup, false); //Precisa arrumar
+        View itemView = inflater.inflate(R.layout.item_evento, viewGroup, false); //Precisa arrumar
         EventoAdapter.ViewHolder vwHolder = new EventoAdapter.ViewHolder(itemView);
         return vwHolder;
     }
@@ -57,7 +57,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
-            txtTituloEvento = (TextView) itemView.findViewById(R.id.txtNomeParticipante);
+            txtTituloEvento = (TextView) itemView.findViewById(R.id.txtNomeEvento);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -74,6 +74,13 @@ public class MainActivity extends AppCompatActivity {
         adapterEvent = new EventoAdapter(getEventoCursor());
         lstEventos.setAdapter(adapterEvent);
         lstEventos.setLayoutManager(new LinearLayoutManager(this));
+        adapterEvent.setOnEventoClickListener(new EventoAdapter.OnEventoClickListener() {
+            @Override
+            public void onEventoClick(View eventoView, int position) {
+                Intent i = new Intent(MainActivity.this,CadastrarPartEventActivity.class);
+                startActivityForResult(i, REQUEST_CREATE_PERSON);
+            }
+        });
     }
 
     @Override
