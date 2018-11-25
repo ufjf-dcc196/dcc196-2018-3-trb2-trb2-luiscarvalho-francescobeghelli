@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         lstEventos.setLayoutManager(new LinearLayoutManager(this));
         adapterEvent.setOnEventoClickListener(new EventoAdapter.OnEventoClickListener() {
             @Override
-            public void onEventoClick(View eventoView, int position) {
+            public void onEventoClick(View eventoView, long itemId) {
                 Intent i = new Intent(MainActivity.this, CadastrarPartEventActivity.class);
                 startActivityForResult(i, REQUEST_CREATE_PERSON);
             }
@@ -103,13 +103,13 @@ public class MainActivity extends AppCompatActivity {
 
     private Cursor getParticipanteCursor()
     {
-        return db.query(ParticipanteContract.Participante.TABLE_NAME, new String[] {ParticipanteContract.Participante.COLUMN_NAME_NOME, ParticipanteContract.Participante.COLUMN_NAME_CPF,
+        return db.query(ParticipanteContract.Participante.TABLE_NAME, new String[] {ParticipanteContract.Participante._ID ,ParticipanteContract.Participante.COLUMN_NAME_NOME, ParticipanteContract.Participante.COLUMN_NAME_CPF,
                 ParticipanteContract.Participante.COLUMN_NAME_EMAIL }, null,null,null,null,null,null);
     }
 
     private Cursor getEventoCursor()
     {
-        return db.query(EventoContract.Evento.TABLE_NAME, new String[] {EventoContract.Evento.COLUMN_NAME_TITULO, EventoContract.Evento.COLUMN_NAME_HORARIO,
+        return db.query(EventoContract.Evento.TABLE_NAME, new String[] {EventoContract.Evento._ID, EventoContract.Evento.COLUMN_NAME_TITULO, EventoContract.Evento.COLUMN_NAME_HORARIO,
                 EventoContract.Evento.COLUMN_NAME_DESC, EventoContract.Evento.COLUMN_NAME_FACILIT, EventoContract.Evento.COLUMN_NAME_DIA }, null,null,null,null,null,null);
     }
 }

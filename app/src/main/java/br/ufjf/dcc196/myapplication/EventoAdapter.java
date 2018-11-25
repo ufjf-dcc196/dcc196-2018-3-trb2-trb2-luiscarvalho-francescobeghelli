@@ -21,7 +21,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
     }
     
     public interface OnEventoClickListener {
-        void onEventoClick(View eventoView, int position);
+        void onEventoClick(View eventoView, long itemId);
     }
 
     public void setOnEventoClickListener(EventoAdapter.OnEventoClickListener listener) {
@@ -42,8 +42,16 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull EventoAdapter.ViewHolder viewHolder, int i) {
         int idxTitulo = cursor.getColumnIndexOrThrow(EventoContract.Evento.COLUMN_NAME_TITULO);
+        int idxId = cursor.getColumnIndexOrThrow(EventoContract.Evento._ID);
         cursor.moveToPosition(i);
         viewHolder.txtTituloEvento.setText(cursor.getString(idxTitulo));
+        final long id = cursor.getLong(idxId);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    listener.onEventoClick(v, id);
+                }
+            });
     }
 
     @Override
@@ -58,19 +66,6 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             txtTituloEvento = (TextView) itemView.findViewById(R.id.txtNomeEvento);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onEventoClick(itemView, position);
-                        }
-                    }
-                }
-            });
-
         }
     }
 }
