@@ -20,6 +20,8 @@ public class CadastroEventoActivity extends AppCompatActivity {
     private EditText edtDesc;
     private Button btnCadastrarEvento;
 
+    private int id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,15 +34,50 @@ public class CadastroEventoActivity extends AppCompatActivity {
         edtDesc = (EditText)findViewById(R.id.edtDescricaoCadEvento);
         btnCadastrarEvento = (Button) findViewById(R.id.btnCadastrarEvento);
 
+        Bundle bundle = null;
+        try {
+            bundle = this.getIntent().getExtras();
+            id = bundle.getInt("id", -1);
+        }
+        catch (Exception err)
+        {
+            id = -1;
+        }
+
+        if(id != -1) //é pra atualizar, preenche com os dados do evento
+        {
+            edtTitulo.setText(bundle.getString("titulo"));
+            edtDia.setText(bundle.getString("dia"));
+            edtHorario.setText(bundle.getString("horario"));
+            edtFacilit.setText(bundle.getString("facilitador"));
+            edtDesc.setText(bundle.getString("descricao"));
+            btnCadastrarEvento.setText("Atualizar Evento");
+        }
+
         btnCadastrarEvento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try
                 {
                     if (validateEntry()) {
-                        EventoContract.saveEvento(new ParticipanteEventoDbHelper(CadastroEventoActivity.this).getWritableDatabase(),
-                                edtTitulo.getText().toString(), edtDia.getText().toString(), edtHorario.getText().toString(), edtFacilit.getText().toString(), edtDesc.getText().toString());
-                        setResult(Activity.RESULT_OK);
+                        if(id != -1)
+                        {
+                            EventoContract.updateEvento(new ParticipanteEventoDbHelper(CadastroEventoActivity.this).getWritableDatabase(), id,
+                                    edtTitulo.getText().toString(), edtDia.getText().toString(), edtHorario.getText().toString(), edtFacilit.getText().toString(), edtDesc.getText().toString());
+
+                            Intent i = new Intent();
+                            i.putExtra("titulo", edtTitulo.getText().toString());
+                            i.putExtra("horario", edtHorario.getText().toString());
+                            i.putExtra("dia", edtDia.getText().toString());
+                            i.putExtra("facilitador", edtFacilit.getText().toString());
+                            i.putExtra("descricao", edtDesc.getText().toString());
+                            setResult(Activity.RESULT_OK, i);
+                        }
+                        else {
+                            EventoContract.saveEvento(new ParticipanteEventoDbHelper(CadastroEventoActivity.this).getWritableDatabase(),
+                                    edtTitulo.getText().toString(), edtDia.getText().toString(), edtHorario.getText().toString(), edtFacilit.getText().toString(), edtDesc.getText().toString());
+                            setResult(Activity.RESULT_OK);
+                        }
                         Toast.makeText(CadastroEventoActivity.this, "Evento salvo com sucesso", Toast.LENGTH_SHORT).show();
                         finish();
                     } else

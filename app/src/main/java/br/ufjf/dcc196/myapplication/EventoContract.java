@@ -7,6 +7,8 @@ import android.provider.BaseColumns;
 
 public class EventoContract {
 
+
+
     public final class Evento implements BaseColumns
     {
         public static final String TABLE_NAME = "Evento";
@@ -28,14 +30,25 @@ public class EventoContract {
 
     public static void saveEvento(SQLiteDatabase db, String titulo, String dia,
                                   String horario, String facilitador, String descricao) {
+        db.insert(EventoContract.Evento.TABLE_NAME,null,
+                createContentValue(titulo, dia, horario, facilitador, descricao));
+    }
+
+    public static void updateEvento(SQLiteDatabase db, int id, String titulo, String dia,
+                                    String horario, String facilitador, String descricao) {
+        db.update(Evento.TABLE_NAME,createContentValue(titulo, dia, horario, facilitador, descricao),
+                Evento._ID + " = ?", new String[] {Integer.toString(id)});
+    }
+
+    private static ContentValues createContentValue(String titulo, String dia, String horario, String facilitador, String descricao)
+    {
         ContentValues cv = new ContentValues();
         cv.put(EventoContract.Evento.COLUMN_NAME_TITULO, titulo);
         cv.put(EventoContract.Evento.COLUMN_NAME_DIA, dia);
         cv.put(EventoContract.Evento.COLUMN_NAME_HORARIO, horario);
         cv.put(EventoContract.Evento.COLUMN_NAME_FACILIT, facilitador);
         cv.put(EventoContract.Evento.COLUMN_NAME_DESC, descricao);
-
-        db.insert(EventoContract.Evento.TABLE_NAME,null, cv);
+        return cv;
     }
 
     public static Cursor getEventoCursor(SQLiteDatabase db, String selection, String[] selectionArgs)
