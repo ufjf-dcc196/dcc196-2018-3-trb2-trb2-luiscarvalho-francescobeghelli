@@ -65,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
 
         adapterPart.setOnParticClickListener(new ParticipanteAdapter.OnParticClickListener() {
             @Override
-            public void onParticClick(View particView, int position) {
+            public void onParticClick(View particView, int itemId) {
                 Intent i = new Intent(MainActivity.this, ParticipanteDetailsActivity.class);
-                i.putExtra("posicao", position);
-                startActivityForResult(i, REQUEST_CREATE_PERSON);
+                i.putExtra("id", itemId);
+                startActivity(i);
             }
         });
 
@@ -78,9 +78,10 @@ public class MainActivity extends AppCompatActivity {
         lstEventos.setLayoutManager(new LinearLayoutManager(this));
         adapterEvent.setOnEventoClickListener(new EventoAdapter.OnEventoClickListener() {
             @Override
-            public void onEventoClick(View eventoView, long itemId) {
+            public void onEventoClick(View eventoView, int itemId) {
                 Intent i = new Intent(MainActivity.this, CadastrarPartEventActivity.class);
-                startActivityForResult(i, REQUEST_CREATE_PERSON);
+                i.putExtra("id", itemId);
+                startActivity(i);
             }
         });
     }

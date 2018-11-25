@@ -21,7 +21,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
     }
     
     public interface OnEventoClickListener {
-        void onEventoClick(View eventoView, long itemId);
+        void onEventoClick(View eventoView, int itemId);
     }
 
     public void setOnEventoClickListener(EventoAdapter.OnEventoClickListener listener) {
@@ -45,7 +45,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
         int idxId = cursor.getColumnIndexOrThrow(EventoContract.Evento._ID);
         cursor.moveToPosition(i);
         viewHolder.txtTituloEvento.setText(cursor.getString(idxTitulo));
-        final long id = cursor.getLong(idxId);
+        final int id = cursor.getInt(idxId);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

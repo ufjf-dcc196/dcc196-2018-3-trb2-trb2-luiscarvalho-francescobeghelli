@@ -42,8 +42,17 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         int idxTitulo = cursor.getColumnIndexOrThrow(ParticipanteContract.Participante.COLUMN_NAME_NOME);
+        int idxId = cursor.getColumnIndexOrThrow(ParticipanteContract.Participante._ID);
         cursor.moveToPosition(i);
         viewHolder.txtNomeParticipante.setText(cursor.getString(idxTitulo));
+
+        final int id = cursor.getInt(idxId);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onParticClick(v, id);
+            }
+        });
     }
 
     @Override
@@ -55,22 +64,9 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
 
         public TextView txtNomeParticipante;
 
-
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             txtNomeParticipante = (TextView)itemView.findViewById(R.id.txtNomeParticipante);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(listener!=null){
-                        int position = getAdapterPosition();
-                        if(position!=RecyclerView.NO_POSITION){
-                            listener.onParticClick(itemView, position);
-                        }
-                    }
-                }
-            });
-
         }
     }
 }
