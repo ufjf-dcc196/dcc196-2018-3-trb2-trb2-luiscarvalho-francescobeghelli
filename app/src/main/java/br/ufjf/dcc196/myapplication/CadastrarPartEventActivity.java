@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,11 +24,20 @@ public class CadastrarPartEventActivity extends AppCompatActivity {
     private TextView txtDescricao;
     private Button btnEditarEvento;
 
+    private RecyclerView lstPartCadastradosEvento;
+    private SQLiteDatabase db;
+    private static ParticipanteAdapter adapterPart;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_part_event);
+
+        db = new ParticipanteEventoDbHelper(this).getWritableDatabase();
+
+        Bundle bundle = getIntent().getExtras();
+        final int id = bundle.getInt("id");
 
         txtTitulo = (TextView)findViewById(R.id.txtTituloCadPartEvent);
         txtDia = (TextView)findViewById(R.id.txtDiaCadPartEvent);
@@ -34,10 +45,16 @@ public class CadastrarPartEventActivity extends AppCompatActivity {
         txtFacilitador = (TextView)findViewById(R.id.txtFacilitadorCadPartEvent);
         txtDescricao = (TextView)findViewById(R.id.txtDescricaoCadPartEvent);
 
-        Bundle bundle = getIntent().getExtras();
-        final int id = bundle.getInt("id");
-
-        SQLiteDatabase db = new ParticipanteEventoDbHelper(this).getWritableDatabase();
+        lstPartCadastradosEvento = (RecyclerView)findViewById(R.id.lstPartCadastradosEvento);
+        adapterPart = new ParticipanteAdapter(InscricaoContract.getParticipantesEventoCursor(db, id));
+        adapterPart.setOnParticClickListener(new ParticipanteAdapter.OnParticClickListener() {
+            @Override
+            public void onParticClick(View particView, int position) {
+                // não faz nada
+            }
+        });
+        lstPartCadastradosEvento.setAdapter(adapterPart);
+        lstPartCadastradosEvento.setLayoutManager(new LinearLayoutManager(this));
 
         Cursor cursor = EventoContract.getEventoCursor(db,EventoContract.Evento._ID+" = ?",new String[] { Integer.toString(id) });
         int idxTitulo = cursor.getColumnIndexOrThrow(EventoContract.Evento.COLUMN_NAME_TITULO);
@@ -66,6 +83,8 @@ public class CadastrarPartEventActivity extends AppCompatActivity {
                 startActivityForResult(i, REQUEST_UPDATE_EVENT);
             }
         });
+
+
     }
 
     @Override
