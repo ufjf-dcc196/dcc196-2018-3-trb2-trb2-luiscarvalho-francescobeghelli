@@ -2,6 +2,7 @@ package br.ufjf.dcc196.myapplication;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,7 +41,6 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
             btnCadastrar.setText("Atualizar Participante");
         }
 
-
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,13 +49,22 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
                     if(validateEntry())
                     {
                         if(id != -1)
+                        {
                             ParticipanteContract.updateParticipante(new ParticipanteEventoDbHelper(CadastroParticipanteActivity.this).getWritableDatabase(), id,
                                     edtCpf.getText().toString(), edtEmail.getText().toString(), edtNome.getText().toString());
+                            Intent i = new Intent();
+                            i.putExtra("nome", edtNome.getText().toString());
+                            i.putExtra("email", edtEmail.getText().toString());
+                            i.putExtra("cpf", edtCpf.getText().toString());
+                            setResult(Activity.RESULT_OK, i);
+                        }
                         else
+                        {
                             ParticipanteContract.saveParticipantes(new ParticipanteEventoDbHelper(CadastroParticipanteActivity.this).getWritableDatabase(),
-                                edtCpf.getText().toString(), edtEmail.getText().toString(), edtNome.getText().toString());
+                                    edtCpf.getText().toString(), edtEmail.getText().toString(), edtNome.getText().toString());
+                            setResult(Activity.RESULT_OK);
+                        }
 
-                        setResult(Activity.RESULT_OK);
                         Toast.makeText(CadastroParticipanteActivity.this,"Participante salvo com sucesso", Toast.LENGTH_SHORT).show();
                         finish();
                     }
