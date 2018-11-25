@@ -21,18 +21,18 @@ public class CadastrarPartEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_part_event);
 
-        txtTitulo = (TextView)findViewById(R.id.txtNomePartEvent);
-        txtDia = (TextView)findViewById(R.id.txtEmailPartEvent);
-        txtHorario = (TextView)findViewById(R.id.txtCPFPartEvent);
-        txtFacilitador = (TextView)findViewById(R.id.txtCPFPartEvent);
-        txtDescricao = (TextView)findViewById(R.id.txtCPFPartEvent);
+        txtTitulo = (TextView)findViewById(R.id.txtTituloCadPartEvent);
+        txtDia = (TextView)findViewById(R.id.txtDiaCadPartEvent);
+        txtHorario = (TextView)findViewById(R.id.txtHorarioCadPartEvent);
+        txtFacilitador = (TextView)findViewById(R.id.txtFacilitadorCadPartEvent);
+        txtDescricao = (TextView)findViewById(R.id.txtDescricaoCadPartEvent);
 
         Bundle bundle = getIntent().getExtras();
         final String id = Integer.toString(bundle.getInt("id"));
 
         SQLiteDatabase db = new ParticipanteEventoDbHelper(this).getWritableDatabase();
 
-        Cursor cursor = ParticipanteContract.getParticipanteCursor(db,EventoContract.Evento._ID+" = ?",new String[] {id});
+        Cursor cursor = EventoContract.getEventoCursor(db,EventoContract.Evento._ID+" = ?",new String[] {id});
         int idxTitulo = cursor.getColumnIndexOrThrow(EventoContract.Evento.COLUMN_NAME_TITULO);
         int idxDia = cursor.getColumnIndexOrThrow(EventoContract.Evento.COLUMN_NAME_DIA);
         int idxHorario = cursor.getColumnIndexOrThrow(EventoContract.Evento.COLUMN_NAME_HORARIO);
