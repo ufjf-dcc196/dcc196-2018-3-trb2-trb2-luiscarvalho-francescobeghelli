@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private static ParticipanteAdapter adapterPart;
     private static EventoAdapter adapterEvent;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
