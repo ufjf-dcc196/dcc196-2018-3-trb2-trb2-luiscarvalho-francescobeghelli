@@ -30,8 +30,15 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
 
         Button btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
 
-        Bundle bundle = this.getIntent().getExtras();
-        id = bundle.getInt("id", -1);
+        Bundle bundle = null;
+        try {
+            bundle = this.getIntent().getExtras();
+            id = bundle.getInt("id", -1);
+        }
+        catch (Exception err)
+        {
+            id = -1;
+        }
 
         if(id != -1) //é pra atualizar, preenche com os dados do participante
         {
