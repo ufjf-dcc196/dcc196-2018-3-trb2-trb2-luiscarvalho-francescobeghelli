@@ -37,6 +37,8 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
         btnEdtPart = (Button)findViewById(R.id.btnEdtPart);
         btnCadEvent = (Button)findViewById(R.id.btnCadEvento);
 
+        listEventosPart = (RecyclerView) findViewById(R.id.lstEventosParticipante);
+
         Bundle bundle = getIntent().getExtras();
         final int id = bundle.getInt("id");
 
@@ -62,6 +64,16 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
                 startActivityForResult(i, REQUEST_UPDATE_PARTICIPANTE);
             }
         });
+
+        btnCadEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ParticipanteDetailsActivity.this,InscricaoParticipanteActivity.class);
+                startActivity(i);
+            }
+        });
+
+
     }
 
     @Override

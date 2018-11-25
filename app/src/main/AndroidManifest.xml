@@ -19,7 +19,8 @@
         <activity android:name=".CadastroParticipanteActivity" />
         <activity android:name=".CadastroEventoActivity" />
         <activity android:name=".CadastrarPartEventActivity" />
-        <activity android:name=".ParticipanteDetailsActivity"></activity>
+        <activity android:name=".ParticipanteDetailsActivity" />
+        <activity android:name=".InscricaoParticipanteActivity"></activity>
     </application>
 
 </manifest>
