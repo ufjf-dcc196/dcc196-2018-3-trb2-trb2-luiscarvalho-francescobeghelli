@@ -25,4 +25,11 @@ public class InscricaoContract {
                 " i ON e." + EventoContract.Evento._ID + " = i." + Inscricao.COLUMN_NAME_ID_EVENTO + " WHERE i." + Inscricao.COLUMN_NAME_ID_PARTICIPANTE
                 + " != ?", new String[] { Integer.toString(id) });
     }
+
+    public static Cursor getEventosQueParticipaCursor(SQLiteDatabase db, int id)
+    {
+        return db.rawQuery("SELECT DISTINCT *.e from " + EventoContract.Evento.TABLE_NAME + " e LEFT JOIN " + Inscricao.TABLE_NAME +
+                " i ON e." + EventoContract.Evento._ID + " = i." + Inscricao.COLUMN_NAME_ID_EVENTO + " WHERE i." + Inscricao.COLUMN_NAME_ID_PARTICIPANTE
+                + " = ?", new String[] { Integer.toString(id) });
+    }
 }
