@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 public class ParticipanteDetailsActivity extends AppCompatActivity {
 
     private static final int REQUEST_UPDATE_PARTICIPANTE = 1;
+    private static final int REQUEST_ADD_INSCRICAO = 1;
     private TextView txtNome;
     private TextView txtEmail;
     private TextView txtCpf;
@@ -24,6 +26,8 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
     private Button btnCadEvent;
 
     private RecyclerView listEventosPart;
+    private SQLiteDatabase db;
+    private static EventoAdapter adapterPart;
 
 
     @Override
@@ -37,10 +41,13 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
         btnEdtPart = (Button)findViewById(R.id.btnEdtPart);
         btnCadEvent = (Button)findViewById(R.id.btnCadEvento);
 
-        listEventosPart = (RecyclerView) findViewById(R.id.lstEventosParticipante);
-
         Bundle bundle = getIntent().getExtras();
         final int id = bundle.getInt("id");
+
+        listEventosPart = (RecyclerView) findViewById(R.id.lstEventosParticipante);
+        adapterPart = new EventoAdapter(InscricaoContract.getEventosQueParticipaCursor(db, id));
+        listEventosPart.setAdapter(adapterPart);
+        listEventosPart.setLayoutManager(new LinearLayoutManager(this));
 
         SQLiteDatabase db = new ParticipanteEventoDbHelper(this).getWritableDatabase();
 
@@ -69,7 +76,8 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(ParticipanteDetailsActivity.this,InscricaoParticipanteActivity.class);
-                startActivity(i);
+                i.putExtra("id", id);
+                startActivityForResult(i, REQUEST_ADD_INSCRICAO);
             }
         });
 
