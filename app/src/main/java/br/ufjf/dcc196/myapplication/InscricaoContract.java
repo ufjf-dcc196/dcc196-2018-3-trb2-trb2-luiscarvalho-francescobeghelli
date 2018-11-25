@@ -34,6 +34,20 @@ public class InscricaoContract {
                 + " = ?", new String[] { Integer.toString(id) });
     }
 
+    public static Cursor getParticipantesNaoVaoEventoCursor(SQLiteDatabase db, int id)
+    {
+        return db.rawQuery("SELECT DISTINCT p.* from " + ParticipanteContract.Participante.TABLE_NAME + " p LEFT JOIN " + Inscricao.TABLE_NAME +
+                " i ON p." + ParticipanteContract.Participante._ID + " = i." + Inscricao.COLUMN_NAME_ID_PARTICIPANTE + " WHERE i." + Inscricao.COLUMN_NAME_ID_EVENTO
+                + " != ? OR " + Inscricao.COLUMN_NAME_ID_EVENTO + " IS NULL", new String[] { Integer.toString(id) });
+    }
+
+    public static Cursor getParticipantesEventoCursor(SQLiteDatabase db, int id)
+    {
+        return db.rawQuery("SELECT DISTINCT p.* from " + ParticipanteContract.Participante.TABLE_NAME + " p INNER JOIN " + Inscricao.TABLE_NAME +
+                " i ON p." + ParticipanteContract.Participante._ID + " = i." + Inscricao.COLUMN_NAME_ID_PARTICIPANTE + " WHERE i." + Inscricao.COLUMN_NAME_ID_EVENTO
+                + " = ?", new String[] { Integer.toString(id) });
+    }
+
     public static void saveInscricao(SQLiteDatabase db, int idEvento, int idParticipante)
     {
         ContentValues cv = new ContentValues();
