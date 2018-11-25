@@ -102,10 +102,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleEventoCad() {
-        lstEventos.swapAdapter(new EventoAdapter(EventoContract.getEventoCursor(db, null, null)), false);
+        adapterEvent = new EventoAdapter(EventoContract.getEventoCursor(db, null, null));
+        adapterEvent.setOnEventoClickListener(new EventoAdapter.OnEventoClickListener() {
+            @Override
+            public void onEventoClick(View eventoView, int itemId) {
+                Intent i = new Intent(MainActivity.this, CadastrarPartEventActivity.class);
+                i.putExtra("id", itemId);
+                startActivityForResult(i, REQUEST_DETAILS_EVENT);
+            }
+        });
+
+        lstEventos.swapAdapter(adapterEvent, false);
     }
 
     private void handleParticipanteCad() {
-        lstParticipantes.swapAdapter(new ParticipanteAdapter(ParticipanteContract.getParticipanteCursor(db, null, null)), false);
+        adapterPart = new ParticipanteAdapter(ParticipanteContract.getParticipanteCursor(db, null, null));
+        adapterPart.setOnParticClickListener(new ParticipanteAdapter.OnParticClickListener() {
+            @Override
+            public void onParticClick(View particView, int itemId) {
+                Intent i = new Intent(MainActivity.this, ParticipanteDetailsActivity.class);
+                i.putExtra("id", itemId);
+                startActivityForResult(i, REQUEST_DETAILS_PERSON);
+            }
+        });
+
+        lstParticipantes.swapAdapter(adapterPart, false);
     }
 }
