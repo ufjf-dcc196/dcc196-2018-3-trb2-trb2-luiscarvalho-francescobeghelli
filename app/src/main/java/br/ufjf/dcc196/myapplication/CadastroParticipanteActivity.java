@@ -27,15 +27,20 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
         edtEmail = (EditText)findViewById(R.id.edtEmail);
         edtCpf = (EditText)findViewById(R.id.edtCpf);
 
+        Button btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
+
         Bundle bundle = this.getIntent().getExtras();
         id = bundle.getInt("id", -1);
 
-        if(id != -1)
+        if(id != -1) //é pra atualizar, preenche com os dados do participante
         {
-
+            edtNome.setText(bundle.getString("nome"));
+            edtEmail.setText(bundle.getString("email"));
+            edtCpf.setText(bundle.getString("cpf"));
+            btnCadastrar.setText("Atualizar Participante");
         }
 
-        Button btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
+
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,7 +48,11 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
                 {
                     if(validateEntry())
                     {
-                        ParticipanteContract.saveParticipantes(new ParticipanteEventoDbHelper(CadastroParticipanteActivity.this).getWritableDatabase(),
+                        if(id != -1)
+                            ParticipanteContract.updateParticipante(new ParticipanteEventoDbHelper(CadastroParticipanteActivity.this).getWritableDatabase(), id,
+                                    edtCpf.getText().toString(), edtEmail.getText().toString(), edtNome.getText().toString());
+                        else
+                            ParticipanteContract.saveParticipantes(new ParticipanteEventoDbHelper(CadastroParticipanteActivity.this).getWritableDatabase(),
                                 edtCpf.getText().toString(), edtEmail.getText().toString(), edtNome.getText().toString());
 
                         setResult(Activity.RESULT_OK);

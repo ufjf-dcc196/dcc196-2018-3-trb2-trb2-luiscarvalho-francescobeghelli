@@ -1,6 +1,7 @@
 package br.ufjf.dcc196.myapplication;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
@@ -23,12 +24,20 @@ public class ParticipanteContract {
     }
 
     public static void saveParticipantes(SQLiteDatabase db, String cpf, String email, String nome) {
+        db.insert(ParticipanteContract.Participante.TABLE_NAME,null, createContentValue(cpf,email,nome));
+    }
+
+    private static ContentValues createContentValue(String cpf, String email, String nome){
         ContentValues cv = new ContentValues();
         cv.put(ParticipanteContract.Participante.COLUMN_NAME_CPF, cpf);
         cv.put(ParticipanteContract.Participante.COLUMN_NAME_EMAIL, email);
         cv.put(ParticipanteContract.Participante.COLUMN_NAME_NOME, nome);
+        return cv;
+    }
 
-        db.insert(ParticipanteContract.Participante.TABLE_NAME,null, cv);
+    public static void updateParticipante(SQLiteDatabase db, int id, String cpf, String email, String nome) {
+        db.update(ParticipanteContract.Participante.TABLE_NAME, createContentValue(cpf,email,nome),
+                Participante._ID + "= ?", new String[]{Integer.toString(id)});
     }
 
     public static Cursor getParticipanteCursor(SQLiteDatabase db, String selection, String[] selectionArgs)
