@@ -18,12 +18,13 @@ import android.widget.TextView;
 public class ParticipanteDetailsActivity extends AppCompatActivity {
 
     private static final int REQUEST_UPDATE_PARTICIPANTE = 1;
-    private static final int REQUEST_ADD_INSCRICAO = 1;
+    private static final int REQUEST_ADD_INSCRICAO = 2;
     private TextView txtNome;
     private TextView txtEmail;
     private TextView txtCpf;
     private Button btnEdtPart;
     private Button btnCadEvent;
+    private int id;
 
     private RecyclerView listEventosPart;
     private SQLiteDatabase db;
@@ -44,12 +45,19 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
         btnCadEvent = (Button)findViewById(R.id.btnCadEvento);
 
         Bundle bundle = getIntent().getExtras();
-        final int id = bundle.getInt("id");
+        id = bundle.getInt("id");
 
         listEventosPart = (RecyclerView) findViewById(R.id.lstEventosParticipante);
         adapterPart = new EventoAdapter(InscricaoContract.getEventosQueParticipaCursor(db, id));
+        adapterPart.setOnEventoClickListener(new EventoAdapter.OnEventoClickListener() {
+            @Override
+            public void onEventoClick(View eventoView, int itemId) {
+                //Não faz nada
+            }
+        });
         listEventosPart.setAdapter(adapterPart);
         listEventosPart.setLayoutManager(new LinearLayoutManager(this));
+
 
         Cursor cursor = ParticipanteContract.getParticipanteCursor(db,ParticipanteContract.Participante._ID+" = ?",new String[] {Integer.toString(id)});
         int idxNome = cursor.getColumnIndexOrThrow(ParticipanteContract.Participante.COLUMN_NAME_NOME);
@@ -92,6 +100,10 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
             txtNome.setText(bundle.getString("nome"));
             txtCpf.setText(bundle.getString("cpf"));
             txtEmail.setText(bundle.getString("email"));
+        }
+        else if(requestCode == REQUEST_ADD_INSCRICAO && resultCode == Activity.RESULT_OK){
+            adapterPart = new EventoAdapter(InscricaoContract.getEventosQueParticipaCursor(db,id));
+            listEventosPart.swapAdapter(adapterPart,false);
         }
     }
 }
