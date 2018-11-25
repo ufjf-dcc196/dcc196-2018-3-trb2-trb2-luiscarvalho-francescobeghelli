@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +20,10 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
     private TextView txtNome;
     private TextView txtEmail;
     private TextView txtCpf;
-    private Button btnEditar;
+    private Button btnEdtPart;
+    private Button btnCadEvent;
+
+    private RecyclerView listEventosPart;
 
 
     @Override
@@ -30,6 +34,8 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
         txtNome = (TextView)findViewById(R.id.txtNomePartEvent);
         txtEmail = (TextView)findViewById(R.id.txtEmailPartEvent);
         txtCpf = (TextView)findViewById(R.id.txtCPFPartEvent);
+        btnEdtPart = (Button)findViewById(R.id.btnEdtPart);
+        btnCadEvent = (Button)findViewById(R.id.btnCadEvento);
 
         Bundle bundle = getIntent().getExtras();
         final int id = bundle.getInt("id");
@@ -45,8 +51,7 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
         txtEmail.setText(cursor.getString(idxEmail));
         txtCpf.setText(cursor.getString(idxCPF));
 
-        btnEditar = (Button)findViewById(R.id.btnEditarParticipante);
-        btnEditar.setOnClickListener(new View.OnClickListener() {
+        btnEdtPart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(ParticipanteDetailsActivity.this, CadastroParticipanteActivity.class);
