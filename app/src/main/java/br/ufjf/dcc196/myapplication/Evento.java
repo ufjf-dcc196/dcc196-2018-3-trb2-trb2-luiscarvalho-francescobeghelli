@@ -1,5 +1,8 @@
 package br.ufjf.dcc196.myapplication;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Evento {
 
     private String titulo;
@@ -7,6 +10,7 @@ public class Evento {
     private String horario;
     private String facilitador;
     private String descricao;
+    private List<Participante> participantes;
 
     public Evento(String titulo, String dia, String horario, String facilitador, String descricao) {
         this.titulo = titulo;
@@ -14,6 +18,14 @@ public class Evento {
         this.horario = horario;
         this.facilitador = facilitador;
         this.descricao = descricao;
+    }
+    public Evento(String titulo, String dia, String horario, String facilitador, String descricao, List participantes) {
+        this.titulo = titulo;
+        this.dia = dia;
+        this.horario = horario;
+        this.facilitador = facilitador;
+        this.descricao = descricao;
+        this.participantes = new ArrayList<Participante>();
     }
 
     public String getTitulo() {
@@ -54,5 +66,13 @@ public class Evento {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public List<Participante> getInscritos() {
+        return participantes;
+    }
+
+    public void setInscritos(List<Participante> participantes) {
+        this.participantes = participantes;
     }
 }
