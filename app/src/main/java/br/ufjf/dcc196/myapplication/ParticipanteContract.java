@@ -31,9 +31,9 @@ public class ParticipanteContract {
         db.insert(ParticipanteContract.Participante.TABLE_NAME,null, cv);
     }
 
-    public static Cursor getParticipanteCursor(SQLiteDatabase db, String selection)
+    public static Cursor getParticipanteCursor(SQLiteDatabase db, String selection, String[] selectionArgs)
     {
         return db.query(ParticipanteContract.Participante.TABLE_NAME, new String[] {ParticipanteContract.Participante._ID ,ParticipanteContract.Participante.COLUMN_NAME_NOME, ParticipanteContract.Participante.COLUMN_NAME_CPF,
-                ParticipanteContract.Participante.COLUMN_NAME_EMAIL }, null,null,null,null,null,null);
+                ParticipanteContract.Participante.COLUMN_NAME_EMAIL }, selection, selectionArgs,null,null,null,null);
     }
 }

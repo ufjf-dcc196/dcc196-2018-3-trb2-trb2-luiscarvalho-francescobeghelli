@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         lstParticipantes = (RecyclerView)findViewById(R.id.lstParticipantes);
-        adapterPart = new ParticipanteAdapter(ParticipanteContract.getParticipanteCursor(db, null));
+        adapterPart = new ParticipanteAdapter(ParticipanteContract.getParticipanteCursor(db, null, null));
         lstParticipantes.setAdapter(adapterPart);
         lstParticipantes.setLayoutManager(new LinearLayoutManager(this));
 
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         lstEventos = (RecyclerView)findViewById(R.id.lstEventos);
-        adapterEvent = new EventoAdapter(EventoContract.getEventoCursor(db, null));
+        adapterEvent = new EventoAdapter(EventoContract.getEventoCursor(db, null, null));
         lstEventos.setAdapter(adapterEvent);
         lstEventos.setLayoutManager(new LinearLayoutManager(this));
         adapterEvent.setOnEventoClickListener(new EventoAdapter.OnEventoClickListener() {
@@ -95,10 +95,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleEventoCad() {
-        lstEventos.swapAdapter(new EventoAdapter(EventoContract.getEventoCursor(db, null)), false);
+        lstEventos.swapAdapter(new EventoAdapter(EventoContract.getEventoCursor(db, null, null)), false);
     }
 
     private void handleParticipanteCad() {
-        lstParticipantes.swapAdapter(new ParticipanteAdapter(ParticipanteContract.getParticipanteCursor(db, null)), false);
+        lstParticipantes.swapAdapter(new ParticipanteAdapter(ParticipanteContract.getParticipanteCursor(db, null, null)), false);
     }
 }

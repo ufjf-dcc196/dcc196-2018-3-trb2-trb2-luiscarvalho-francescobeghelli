@@ -38,9 +38,9 @@ public class EventoContract {
         db.insert(EventoContract.Evento.TABLE_NAME,null, cv);
     }
 
-    public static Cursor getEventoCursor(SQLiteDatabase db, String selection)
+    public static Cursor getEventoCursor(SQLiteDatabase db, String selection, String[] selectionArgs)
     {
         return db.query(EventoContract.Evento.TABLE_NAME, new String[] {EventoContract.Evento._ID, EventoContract.Evento.COLUMN_NAME_TITULO, EventoContract.Evento.COLUMN_NAME_HORARIO,
-                EventoContract.Evento.COLUMN_NAME_DESC, EventoContract.Evento.COLUMN_NAME_FACILIT, EventoContract.Evento.COLUMN_NAME_DIA }, null,null,null,null,null,null);
+                EventoContract.Evento.COLUMN_NAME_DESC, EventoContract.Evento.COLUMN_NAME_FACILIT, EventoContract.Evento.COLUMN_NAME_DIA }, selection, selectionArgs,null,null,null,null);
     }
 }
