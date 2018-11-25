@@ -31,41 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private static ParticipanteAdapter adapterPart;
     private static EventoAdapter adapterEvent;
 
-    public static List<Participante> participantes = new ArrayList<Participante>(){{
-
-        Participante part1 = new Participante("Fulano da Silva", "66666666666", "fulano@hotmail.com");
-        Participante part2 = new Participante("Cicrano da Silva", "77777777777", "cicrano@hotmail.com");
-        Participante part3 = new Participante("Beltrano da Silva", "11111111111", "beltrano@hotmail.com");
-        Participante part4 = new Participante("Outrano da Silva", "3333333333", "outrano@hotmail.com");
-
-        add(part1);
-        add(part2);
-        add(part3);
-        add(part4);
-    }};
-
-    public static List<Evento> eventos = new ArrayList<Evento>(){{
-        Evento ev1 = new Evento("Curso de Aprendizagem 1", "04/02/2020", "16:20" , "Teacher Love" , "Curso de Aprendizagem 1.");
-        Evento ev2 = new Evento("Curso de Aprendizagem 2", "04/02/2020", "16:20" , "Teacher Happiness" , "Curso de Aprendizagem 2.");
-        Evento ev3 = new Evento("Curso de Aprendizagem 3", "04/02/2020", "16:20" , "Teacher A" , "Curso de Aprendizagem 3.");
-        Evento ev4 = new Evento("Curso de Aprendizagem 4", "04/02/2020", "16:20" , "Teacher Newbie" , "Curso de Aprendizagem 4.");
-
-        add(ev1);
-        add(ev2);
-        add(ev3);
-        add(ev4);
-
-        ev1.getInscritos().add(participantes.get(1));
-        ev2.getInscritos().add(participantes.get(1));
-        ev3.getInscritos().add(participantes.get(1));
-        ev4.getInscritos().add(participantes.get(1));
-
-        participantes.get(1).getEventos().add(ev1);
-        participantes.get(1).getEventos().add(ev1);
-        participantes.get(1).getEventos().add(ev1);
-        participantes.get(1).getEventos().add(ev1);
-    }};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         adapterPart.setOnParticClickListener(new ParticipanteAdapter.OnParticClickListener() {
             @Override
             public void onParticClick(View particView, int position) {
-
                 Intent i = new Intent(MainActivity.this,CadastrarPartEventActivity.class);
                 i.putExtra("posicao", position);
                 startActivityForResult(i, REQUEST_CREATE_PERSON);
@@ -129,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleEventoCad() {
-        lstEventos.swapAdapter(new ParticipanteAdapter(getEventoCursor()), false);
+        lstEventos.swapAdapter(new EventoAdapter(getEventoCursor()), false);
     }
 
     private void handleParticipanteCad() {
