@@ -33,7 +33,8 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
                 {
                     if(validateEntry())
                     {
-                        saveParticipantes();
+                        ParticipanteContract.saveParticipantes(new ParticipanteEventoDbHelper(CadastroParticipanteActivity.this).getWritableDatabase(),
+                                edtCpf.getText().toString(), edtEmail.getText().toString(), edtNome.getText().toString());
 
                         setResult(Activity.RESULT_OK);
                         Toast.makeText(CadastroParticipanteActivity.this,"Participante salvo com sucesso", Toast.LENGTH_SHORT).show();
@@ -48,17 +49,6 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void saveParticipantes() {
-        SQLiteDatabase db = new ParticipanteEventoDbHelper(CadastroParticipanteActivity.this).getWritableDatabase();
-
-        ContentValues cv = new ContentValues();
-        cv.put(ParticipanteContract.Participante.COLUMN_NAME_CPF, edtCpf.getText().toString());
-        cv.put(ParticipanteContract.Participante.COLUMN_NAME_EMAIL, edtEmail.getText().toString());
-        cv.put(ParticipanteContract.Participante.COLUMN_NAME_NOME, edtNome.getText().toString());
-
-        db.insert(ParticipanteContract.Participante.TABLE_NAME,null, cv);
     }
 
     private boolean validateEntry()

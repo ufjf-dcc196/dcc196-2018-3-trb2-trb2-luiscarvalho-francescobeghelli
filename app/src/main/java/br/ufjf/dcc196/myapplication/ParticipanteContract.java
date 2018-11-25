@@ -1,5 +1,7 @@
 package br.ufjf.dcc196.myapplication;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
 public class ParticipanteContract {
@@ -17,5 +19,14 @@ public class ParticipanteContract {
                 + Participante.COLUMN_NAME_CPF + " TEXT "
                 +")";
         public static final String DROP_CADPARTICIPANTE = "DROP TABLE IF EXISTS " + Participante.TABLE_NAME;
+    }
+
+    public static void saveParticipantes(SQLiteDatabase db, String cpf, String email, String nome) {
+        ContentValues cv = new ContentValues();
+        cv.put(ParticipanteContract.Participante.COLUMN_NAME_CPF, cpf);
+        cv.put(ParticipanteContract.Participante.COLUMN_NAME_EMAIL, email);
+        cv.put(ParticipanteContract.Participante.COLUMN_NAME_NOME, nome);
+
+        db.insert(ParticipanteContract.Participante.TABLE_NAME,null, cv);
     }
 }
