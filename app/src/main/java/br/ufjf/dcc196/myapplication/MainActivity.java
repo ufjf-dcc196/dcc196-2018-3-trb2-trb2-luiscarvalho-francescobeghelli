@@ -24,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_CREATE_PERSON = 1;
     public static final int REQUEST_CREATE_EVENT = 2;
+    public static final int REQUEST_DETAILS_PERSON = 3;
+    public static final int REQUEST_DETAILS_EVENT = 4;
+
 
     private RecyclerView lstParticipantes;
     private RecyclerView lstEventos;
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             public void onParticClick(View particView, int itemId) {
                 Intent i = new Intent(MainActivity.this, ParticipanteDetailsActivity.class);
                 i.putExtra("id", itemId);
-                startActivity(i);
+                startActivityForResult(i, REQUEST_DETAILS_PERSON);
             }
         });
 
@@ -81,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             public void onEventoClick(View eventoView, int itemId) {
                 Intent i = new Intent(MainActivity.this, CadastrarPartEventActivity.class);
                 i.putExtra("id", itemId);
-                startActivity(i);
+                startActivityForResult(i, REQUEST_DETAILS_EVENT);
             }
         });
     }
@@ -91,6 +94,10 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == REQUEST_CREATE_PERSON && resultCode == Activity.RESULT_OK)
             handleParticipanteCad();
         else if(requestCode == REQUEST_CREATE_EVENT && resultCode == Activity.RESULT_OK )
+            handleEventoCad();
+        else if(requestCode == REQUEST_DETAILS_PERSON)
+            handleParticipanteCad();
+        else if(requestCode == REQUEST_DETAILS_EVENT)
             handleEventoCad();
     }
 
