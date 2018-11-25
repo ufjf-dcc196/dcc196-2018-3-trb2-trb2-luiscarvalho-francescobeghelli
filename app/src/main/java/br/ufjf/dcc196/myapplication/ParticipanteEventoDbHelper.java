@@ -15,7 +15,6 @@ public class ParticipanteEventoDbHelper extends SQLiteOpenHelper{
     }
 
     private void inicializeParticipante(SQLiteDatabase db){
-        db.getWritableDatabase();
 
         ContentValues cv1 = new ContentValues();
         cv1.put(ParticipanteContract.Participante.COLUMN_NAME_CPF, "66666666666");

@@ -1,5 +1,7 @@
 package br.ufjf.dcc196.myapplication;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
 public class EventoContract {
@@ -21,5 +23,17 @@ public class EventoContract {
                 + Evento.COLUMN_NAME_DESC + " TEXT "
                 +")";
         public static final String DROP_CADEVENTO = "DROP TABLE IF EXISTS " + Evento.TABLE_NAME;
+    }
+
+    public static void saveEvento(SQLiteDatabase db, String titulo, String dia,
+                                  String horario, String facilitador, String descricao) {
+        ContentValues cv = new ContentValues();
+        cv.put(EventoContract.Evento.COLUMN_NAME_TITULO, titulo);
+        cv.put(EventoContract.Evento.COLUMN_NAME_DIA, dia);
+        cv.put(EventoContract.Evento.COLUMN_NAME_HORARIO, horario);
+        cv.put(EventoContract.Evento.COLUMN_NAME_FACILIT, facilitador);
+        cv.put(EventoContract.Evento.COLUMN_NAME_DESC, descricao);
+
+        db.insert(EventoContract.Evento.TABLE_NAME,null, cv);
     }
 }

@@ -38,7 +38,8 @@ public class CadastroEventoActivity extends AppCompatActivity {
                 try
                 {
                     if (validateEntry()) {
-                        saveEvento();
+                        EventoContract.saveEvento(new ParticipanteEventoDbHelper(CadastroEventoActivity.this).getWritableDatabase(),
+                                edtTitulo.getText().toString(), edtDia.getText().toString(), edtHorario.getText().toString(), edtFacilit.getText().toString(), edtDesc.getText().toString());
                         setResult(Activity.RESULT_OK);
                         Toast.makeText(CadastroEventoActivity.this, "Evento salvo com sucesso", Toast.LENGTH_SHORT).show();
                         finish();
@@ -52,19 +53,6 @@ public class CadastroEventoActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void saveEvento() {
-        SQLiteDatabase db = new ParticipanteEventoDbHelper(CadastroEventoActivity.this).getWritableDatabase();
-
-        ContentValues cv = new ContentValues();
-        cv.put(EventoContract.Evento.COLUMN_NAME_TITULO, edtTitulo.getText().toString());
-        cv.put(EventoContract.Evento.COLUMN_NAME_DIA, edtDia.getText().toString());
-        cv.put(EventoContract.Evento.COLUMN_NAME_HORARIO, edtHorario.getText().toString());
-        cv.put(EventoContract.Evento.COLUMN_NAME_FACILIT, edtFacilit.getText().toString());
-        cv.put(EventoContract.Evento.COLUMN_NAME_DESC, edtDesc.getText().toString());
-
-        db.insert(EventoContract.Evento.TABLE_NAME,null, cv);
     }
 
     private boolean validateEntry()
