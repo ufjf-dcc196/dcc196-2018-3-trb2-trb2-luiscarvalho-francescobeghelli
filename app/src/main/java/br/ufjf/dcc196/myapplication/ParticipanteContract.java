@@ -1,6 +1,7 @@
 package br.ufjf.dcc196.myapplication;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
@@ -28,5 +29,11 @@ public class ParticipanteContract {
         cv.put(ParticipanteContract.Participante.COLUMN_NAME_NOME, nome);
 
         db.insert(ParticipanteContract.Participante.TABLE_NAME,null, cv);
+    }
+
+    public static Cursor getParticipanteCursor(SQLiteDatabase db, String selection)
+    {
+        return db.query(ParticipanteContract.Participante.TABLE_NAME, new String[] {ParticipanteContract.Participante._ID ,ParticipanteContract.Participante.COLUMN_NAME_NOME, ParticipanteContract.Participante.COLUMN_NAME_CPF,
+                ParticipanteContract.Participante.COLUMN_NAME_EMAIL }, null,null,null,null,null,null);
     }
 }

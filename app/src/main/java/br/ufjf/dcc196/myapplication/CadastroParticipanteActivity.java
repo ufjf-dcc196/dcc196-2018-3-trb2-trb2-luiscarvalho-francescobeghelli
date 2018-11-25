@@ -16,6 +16,8 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
     private EditText edtEmail;
     private EditText edtCpf;
 
+    private int id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +26,14 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
         edtNome = (EditText)findViewById(R.id.edtNomeCompleto);
         edtEmail = (EditText)findViewById(R.id.edtEmail);
         edtCpf = (EditText)findViewById(R.id.edtCpf);
+
+        Bundle bundle = this.getIntent().getExtras();
+        id = bundle.getInt("id", -1);
+
+        if(id != -1)
+        {
+
+        }
 
         Button btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
         btnCadastrar.setOnClickListener(new View.OnClickListener() {

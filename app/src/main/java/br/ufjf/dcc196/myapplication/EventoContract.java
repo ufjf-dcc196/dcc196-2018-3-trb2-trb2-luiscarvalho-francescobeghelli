@@ -1,6 +1,7 @@
 package br.ufjf.dcc196.myapplication;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
@@ -35,5 +36,11 @@ public class EventoContract {
         cv.put(EventoContract.Evento.COLUMN_NAME_DESC, descricao);
 
         db.insert(EventoContract.Evento.TABLE_NAME,null, cv);
+    }
+
+    public static Cursor getEventoCursor(SQLiteDatabase db, String selection)
+    {
+        return db.query(EventoContract.Evento.TABLE_NAME, new String[] {EventoContract.Evento._ID, EventoContract.Evento.COLUMN_NAME_TITULO, EventoContract.Evento.COLUMN_NAME_HORARIO,
+                EventoContract.Evento.COLUMN_NAME_DESC, EventoContract.Evento.COLUMN_NAME_FACILIT, EventoContract.Evento.COLUMN_NAME_DIA }, null,null,null,null,null,null);
     }
 }

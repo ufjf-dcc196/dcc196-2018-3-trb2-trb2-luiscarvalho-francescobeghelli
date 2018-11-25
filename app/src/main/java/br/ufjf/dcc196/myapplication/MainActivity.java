@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         lstParticipantes = (RecyclerView)findViewById(R.id.lstParticipantes);
-        adapterPart = new ParticipanteAdapter(getParticipanteCursor());
+        adapterPart = new ParticipanteAdapter(ParticipanteContract.getParticipanteCursor(db, null));
         lstParticipantes.setAdapter(adapterPart);
         lstParticipantes.setLayoutManager(new LinearLayoutManager(this));
 
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         lstEventos = (RecyclerView)findViewById(R.id.lstEventos);
-        adapterEvent = new EventoAdapter(getEventoCursor());
+        adapterEvent = new EventoAdapter(EventoContract.getEventoCursor(db, null));
         lstEventos.setAdapter(adapterEvent);
         lstEventos.setLayoutManager(new LinearLayoutManager(this));
         adapterEvent.setOnEventoClickListener(new EventoAdapter.OnEventoClickListener() {
@@ -95,22 +95,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleEventoCad() {
-        lstEventos.swapAdapter(new EventoAdapter(getEventoCursor()), false);
+        lstEventos.swapAdapter(new EventoAdapter(EventoContract.getEventoCursor(db, null)), false);
     }
 
     private void handleParticipanteCad() {
-        lstParticipantes.swapAdapter(new ParticipanteAdapter(getParticipanteCursor()), false);
-    }
-
-    private Cursor getParticipanteCursor()
-    {
-        return db.query(ParticipanteContract.Participante.TABLE_NAME, new String[] {ParticipanteContract.Participante._ID ,ParticipanteContract.Participante.COLUMN_NAME_NOME, ParticipanteContract.Participante.COLUMN_NAME_CPF,
-                ParticipanteContract.Participante.COLUMN_NAME_EMAIL }, null,null,null,null,null,null);
-    }
-
-    private Cursor getEventoCursor()
-    {
-        return db.query(EventoContract.Evento.TABLE_NAME, new String[] {EventoContract.Evento._ID, EventoContract.Evento.COLUMN_NAME_TITULO, EventoContract.Evento.COLUMN_NAME_HORARIO,
-                EventoContract.Evento.COLUMN_NAME_DESC, EventoContract.Evento.COLUMN_NAME_FACILIT, EventoContract.Evento.COLUMN_NAME_DIA }, null,null,null,null,null,null);
+        lstParticipantes.swapAdapter(new ParticipanteAdapter(ParticipanteContract.getParticipanteCursor(db, null)), false);
     }
 }
