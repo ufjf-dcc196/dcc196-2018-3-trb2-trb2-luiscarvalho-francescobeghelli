@@ -35,6 +35,8 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_participante_details);
 
+        db = new ParticipanteEventoDbHelper(this).getWritableDatabase();
+
         txtNome = (TextView)findViewById(R.id.txtNomePartEvent);
         txtEmail = (TextView)findViewById(R.id.txtEmailPartEvent);
         txtCpf = (TextView)findViewById(R.id.txtCPFPartEvent);
@@ -48,8 +50,6 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
         adapterPart = new EventoAdapter(InscricaoContract.getEventosQueParticipaCursor(db, id));
         listEventosPart.setAdapter(adapterPart);
         listEventosPart.setLayoutManager(new LinearLayoutManager(this));
-
-        SQLiteDatabase db = new ParticipanteEventoDbHelper(this).getWritableDatabase();
 
         Cursor cursor = ParticipanteContract.getParticipanteCursor(db,ParticipanteContract.Participante._ID+" = ?",new String[] {Integer.toString(id)});
         int idxNome = cursor.getColumnIndexOrThrow(ParticipanteContract.Participante.COLUMN_NAME_NOME);
