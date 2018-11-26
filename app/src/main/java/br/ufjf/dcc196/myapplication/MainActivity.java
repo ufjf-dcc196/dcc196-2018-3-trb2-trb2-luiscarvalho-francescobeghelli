@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,8 +92,13 @@ public class MainActivity extends AppCompatActivity {
 
         adapterPart.setOnParticLongClickListener(new ParticipanteAdapter.OnParticLongClickListener() {
             @Override
-            public void onParticLongClick(View particView, int position) {
-                // não faz nada
+            public void onParticLongClick(View particView, int itemId) {
+                Intent i = new Intent(MainActivity.this, ParticipanteDetailsActivity.class);
+                i.putExtra("id", itemId);
+                db.delete(ParticipanteContract.Participante.TABLE_NAME,ParticipanteContract.Participante._ID  + " = ? "
+                        ,new String[] { Integer.toString(itemId)});
+                Toast.makeText( MainActivity.this,"Inscrição no evento removida", Toast.LENGTH_SHORT).show();
+                MainActivity.this.recreate();
             }
         });
 
@@ -111,7 +117,12 @@ public class MainActivity extends AppCompatActivity {
         adapterEvent.setOnEventoLongClickListener(new EventoAdapter.OnEventoLongClickListener() {
             @Override
             public void onEventoLongClick(View eventoView, int itemId) {
-                // não faz nada
+                Intent i = new Intent(MainActivity.this, ParticipanteDetailsActivity.class);
+                i.putExtra("id", itemId);
+                db.delete(EventoContract.Evento.TABLE_NAME,EventoContract.Evento._ID  + " = ? "
+                        ,new String[] { Integer.toString(itemId)});
+                Toast.makeText( MainActivity.this,"Inscrição no evento removida", Toast.LENGTH_SHORT).show();
+                MainActivity.this.recreate();
             }
         });
     }

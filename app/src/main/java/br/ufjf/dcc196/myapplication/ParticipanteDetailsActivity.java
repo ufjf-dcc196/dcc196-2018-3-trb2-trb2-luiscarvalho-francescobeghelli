@@ -59,7 +59,10 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
         adapterPart.setOnEventoLongClickListener(new EventoAdapter.OnEventoLongClickListener() {
             @Override
             public void onEventoLongClick(View eventoView, int itemId) {
-                //não faz nada
+                db.delete(InscricaoContract.Inscricao.TABLE_NAME,InscricaoContract.Inscricao.COLUMN_NAME_ID_PARTICIPANTE  + " = ? AND "
+                        + InscricaoContract.Inscricao.COLUMN_NAME_ID_EVENTO + " = ?",new String[] { Integer.toString(itemId), Integer.toString(id) });
+                Toast.makeText( ParticipanteDetailsActivity.this,"Inscrição no evento removida", Toast.LENGTH_SHORT).show();
+                ParticipanteDetailsActivity.this.recreate();
             }
         });
         listEventosPart.setAdapter(adapterPart);
