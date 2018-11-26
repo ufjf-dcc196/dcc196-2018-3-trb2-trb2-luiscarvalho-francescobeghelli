@@ -56,7 +56,8 @@ public class CadastrarPartEventActivity extends AppCompatActivity {
         adapterPart.setOnParticLongClickListener(new ParticipanteAdapter.OnParticLongClickListener() {
             @Override
             public void onParticLongClick(View particView, int position) {
-                // não faz nada
+                db.delete(InscricaoContract.Inscricao.TABLE_NAME,ParticipanteContract.Participante._ID+" = ?",new String[] { Integer.toString(id) });
+                lstPartCadastradosEvento.swapAdapter(adapterPart,false);
             }
         });
         lstPartCadastradosEvento.setAdapter(adapterPart);
