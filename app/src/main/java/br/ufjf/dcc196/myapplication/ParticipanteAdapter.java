@@ -59,7 +59,9 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onParticClick(v, id);
+                if(listener != null) {
+                    listener.onParticClick(v, id);
+                }
             }
         });
 

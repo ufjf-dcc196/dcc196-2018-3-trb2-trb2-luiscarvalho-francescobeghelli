@@ -58,7 +58,9 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(listener != null) {
                     listener.onEventoClick(v, id);
+                }
                 }
             });
         viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
