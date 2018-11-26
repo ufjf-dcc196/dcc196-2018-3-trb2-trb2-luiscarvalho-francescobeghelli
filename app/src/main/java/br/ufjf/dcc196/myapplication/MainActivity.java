@@ -53,11 +53,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnCadPart.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });
+
         btnCadEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,CadastroEventoActivity.class);
                 startActivityForResult(i, REQUEST_CREATE_EVENT);
+            }
+        });
+
+        btnCadEvent.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
             }
         });
 
@@ -75,6 +89,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        adapterPart.setOnParticLongClickListener(new ParticipanteAdapter.OnParticLongClickListener() {
+            @Override
+            public void onParticLongClick(View particView, int position) {
+                // não faz nada
+            }
+        });
+
         lstEventos = (RecyclerView)findViewById(R.id.lstEventos);
         adapterEvent = new EventoAdapter(EventoContract.getEventoCursor(db, null, null));
         lstEventos.setAdapter(adapterEvent);
@@ -85,6 +106,12 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, CadastrarPartEventActivity.class);
                 i.putExtra("id", itemId);
                 startActivityForResult(i, REQUEST_DETAILS_EVENT);
+            }
+        });
+        adapterEvent.setOnEventoLongClickListener(new EventoAdapter.OnEventoLongClickListener() {
+            @Override
+            public void onEventoLongClick(View eventoView, int itemId) {
+                // não faz nada
             }
         });
     }
@@ -111,6 +138,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(i, REQUEST_DETAILS_EVENT);
             }
         });
+        adapterEvent.setOnEventoLongClickListener(new EventoAdapter.OnEventoLongClickListener() {
+            @Override
+            public void onEventoLongClick(View eventoView, int itemId) {
+                // não faz nada
+            }
+        });
 
         lstEventos.swapAdapter(adapterEvent, false);
     }
@@ -123,6 +156,12 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, ParticipanteDetailsActivity.class);
                 i.putExtra("id", itemId);
                 startActivityForResult(i, REQUEST_DETAILS_PERSON);
+            }
+        });
+        adapterPart.setOnParticLongClickListener(new ParticipanteAdapter.OnParticLongClickListener() {
+            @Override
+            public void onParticLongClick(View particView, int position) {
+                // não faz nada
             }
         });
 

@@ -84,6 +84,12 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
                 }
             }
         });
+        btnCadastrar.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });
     }
 
     private boolean validateEntry()

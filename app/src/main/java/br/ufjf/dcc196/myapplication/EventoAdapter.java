@@ -15,6 +15,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
 
     private Cursor cursor;
     private OnEventoClickListener listener;
+    private OnEventoLongClickListener longListener;
 
     public EventoAdapter(Cursor c) {
         cursor = c;
@@ -24,8 +25,16 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
         void onEventoClick(View eventoView, int itemId);
     }
 
+    public interface OnEventoLongClickListener {
+        void onEventoLongClick(View eventoView, int itemId);
+    }
+
     public void setOnEventoClickListener(EventoAdapter.OnEventoClickListener listener) {
         this.listener = listener;
+    }
+
+    public void setOnEventoLongClickListener(EventoAdapter.OnEventoLongClickListener longListener){
+        this.longListener = longListener;
     }
 
     @NonNull
@@ -52,6 +61,15 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
                     listener.onEventoClick(v, id);
                 }
             });
+        viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
+            @Override
+            public boolean onLongClick(View v) {
+                if(longListener != null) {
+                    longListener.onEventoLongClick(v, id);
+                }
+                return false;
+            }
+        });
     }
 
     @Override

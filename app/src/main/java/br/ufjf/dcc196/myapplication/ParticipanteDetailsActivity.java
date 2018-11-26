@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ParticipanteDetailsActivity extends AppCompatActivity {
 
@@ -55,6 +56,12 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
                 //Não faz nada
             }
         });
+        adapterPart.setOnEventoLongClickListener(new EventoAdapter.OnEventoLongClickListener() {
+            @Override
+            public void onEventoLongClick(View eventoView, int itemId) {
+                //não faz nada
+            }
+        });
         listEventosPart.setAdapter(adapterPart);
         listEventosPart.setLayoutManager(new LinearLayoutManager(this));
 
@@ -80,12 +87,26 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
             }
         });
 
+        btnEdtPart.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });
+
         btnCadEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(ParticipanteDetailsActivity.this,InscricaoParticipanteActivity.class);
                 i.putExtra("id", id);
                 startActivityForResult(i, REQUEST_ADD_INSCRICAO);
+            }
+        });
+
+        btnCadEvent.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
             }
         });
 

@@ -15,6 +15,7 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
 
     private Cursor cursor;
     private OnParticClickListener listener;
+    private OnParticLongClickListener longListener;
 
     public ParticipanteAdapter(Cursor c){
         cursor = c;
@@ -24,8 +25,16 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
         void onParticClick(View particView, int position);
     }
 
+    public interface OnParticLongClickListener {
+        void onParticLongClick(View particView, int position);
+    }
+
     public void setOnParticClickListener(OnParticClickListener listener){
         this.listener = listener;
+    }
+
+    public void setOnParticLongClickListener(ParticipanteAdapter.OnParticLongClickListener longListener){
+        this.longListener = longListener;
     }
 
     @NonNull
@@ -51,6 +60,16 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
             @Override
             public void onClick(View v) {
                 listener.onParticClick(v, id);
+            }
+        });
+
+        viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
+            @Override
+            public boolean onLongClick(View v) {
+                if(longListener != null) {
+                    longListener.onParticLongClick(v, id);
+                }
+                return false;
             }
         });
     }

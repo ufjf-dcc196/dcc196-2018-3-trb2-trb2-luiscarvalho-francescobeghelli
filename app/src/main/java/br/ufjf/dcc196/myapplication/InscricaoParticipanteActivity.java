@@ -42,5 +42,11 @@ public class InscricaoParticipanteActivity extends AppCompatActivity {
                 finish();
             }
         });
+        adapterEvent.setOnEventoLongClickListener(new EventoAdapter.OnEventoLongClickListener() {
+            @Override
+            public void onEventoLongClick(View eventoView, int itemId) {
+                // não faz nada
+            }
+        });
         }
 }

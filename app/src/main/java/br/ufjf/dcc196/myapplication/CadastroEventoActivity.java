@@ -90,6 +90,13 @@ public class CadastroEventoActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnCadastrarEvento.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });
     }
 
     private boolean validateEntry()

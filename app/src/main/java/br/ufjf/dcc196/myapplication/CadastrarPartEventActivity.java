@@ -53,6 +53,12 @@ public class CadastrarPartEventActivity extends AppCompatActivity {
                 // não faz nada
             }
         });
+        adapterPart.setOnParticLongClickListener(new ParticipanteAdapter.OnParticLongClickListener() {
+            @Override
+            public void onParticLongClick(View particView, int position) {
+                // não faz nada
+            }
+        });
         lstPartCadastradosEvento.setAdapter(adapterPart);
         lstPartCadastradosEvento.setLayoutManager(new LinearLayoutManager(this));
 
@@ -81,6 +87,12 @@ public class CadastrarPartEventActivity extends AppCompatActivity {
                 i.putExtra("descricao", txtDescricao.getText().toString());
                 i.putExtra("horario", txtHorario.getText().toString());
                 startActivityForResult(i, REQUEST_UPDATE_EVENT);
+            }
+        });
+        btnEditarEvento.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
             }
         });
 
