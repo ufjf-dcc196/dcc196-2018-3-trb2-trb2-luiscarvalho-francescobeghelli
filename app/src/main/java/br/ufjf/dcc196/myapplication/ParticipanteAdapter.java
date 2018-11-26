@@ -22,11 +22,11 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
     }
 
     public interface OnParticClickListener {
-        void onParticClick(View particView, int position);
+        void onParticClick(View particView, int itemId);
     }
 
     public interface OnParticLongClickListener {
-        void onParticLongClick(View particView, int position);
+        void onParticLongClick(View particView, int itemId);
     }
 
     public void setOnParticClickListener(OnParticClickListener listener){

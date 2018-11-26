@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CadastrarPartEventActivity extends AppCompatActivity {
 
@@ -55,9 +56,11 @@ public class CadastrarPartEventActivity extends AppCompatActivity {
         });
         adapterPart.setOnParticLongClickListener(new ParticipanteAdapter.OnParticLongClickListener() {
             @Override
-            public void onParticLongClick(View particView, int position) {
-                db.delete(InscricaoContract.Inscricao.TABLE_NAME,ParticipanteContract.Participante._ID+" = ?",new String[] { Integer.toString(id) });
-                lstPartCadastradosEvento.swapAdapter(adapterPart,false);
+            public void onParticLongClick(View particView, int itemId) {
+                Toast.makeText( CadastrarPartEventActivity.this,"Deu bom ", Toast.LENGTH_SHORT).show();
+                db.delete(InscricaoContract.Inscricao.TABLE_NAME,InscricaoContract.Inscricao.COLUMN_NAME_ID_PARTICIPANTE  + " = ? AND "
+                        + InscricaoContract.Inscricao.COLUMN_NAME_ID_EVENTO + " = ?",new String[] { Integer.toString(itemId), Integer.toString(id) });
+                adapterPart.notifyDataSetChanged();
             }
         });
         lstPartCadastradosEvento.setAdapter(adapterPart);
