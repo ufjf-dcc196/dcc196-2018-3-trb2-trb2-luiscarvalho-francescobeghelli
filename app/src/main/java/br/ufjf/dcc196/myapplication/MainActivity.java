@@ -93,8 +93,6 @@ public class MainActivity extends AppCompatActivity {
         adapterPart.setOnParticLongClickListener(new ParticipanteAdapter.OnParticLongClickListener() {
             @Override
             public void onParticLongClick(View particView, int itemId) {
-                Intent i = new Intent(MainActivity.this, ParticipanteDetailsActivity.class);
-                i.putExtra("id", itemId);
                 db.delete(ParticipanteContract.Participante.TABLE_NAME,ParticipanteContract.Participante._ID  + " = ? "
                         ,new String[] { Integer.toString(itemId)});
                 Toast.makeText( MainActivity.this,"Inscrição no evento removida", Toast.LENGTH_SHORT).show();
