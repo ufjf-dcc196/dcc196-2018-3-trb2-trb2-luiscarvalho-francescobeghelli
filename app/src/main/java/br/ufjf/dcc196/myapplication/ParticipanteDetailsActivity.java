@@ -105,7 +105,8 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
                 db.delete(InscricaoContract.Inscricao.TABLE_NAME,InscricaoContract.Inscricao.COLUMN_NAME_ID_PARTICIPANTE  + " = ? AND "
                         + InscricaoContract.Inscricao.COLUMN_NAME_ID_EVENTO + " = ?",new String[] { Integer.toString(id), Integer.toString(itemId) });
                 Toast.makeText( ParticipanteDetailsActivity.this,"Inscrição no evento removida", Toast.LENGTH_SHORT).show();
-                ParticipanteDetailsActivity.this.recreate();
+                adapterPart.notifyItemRemoved(listEventosPart.getChildLayoutPosition(eventoView));
+                adapterPart.setCursor(InscricaoContract.getEventosQueParticipaCursor(db, id));
             }
         });
         listEventosPart.setAdapter(adapterPart);

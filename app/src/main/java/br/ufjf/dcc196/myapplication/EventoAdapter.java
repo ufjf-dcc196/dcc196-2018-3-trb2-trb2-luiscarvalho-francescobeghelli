@@ -37,6 +37,11 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
         this.longListener = longListener;
     }
 
+    public void setCursor(Cursor c)
+    {
+        cursor = c;
+    }
+
     @NonNull
     @Override
     public EventoAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

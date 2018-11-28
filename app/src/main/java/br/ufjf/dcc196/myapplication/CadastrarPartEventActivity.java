@@ -54,7 +54,8 @@ public class CadastrarPartEventActivity extends AppCompatActivity {
                 db.delete(InscricaoContract.Inscricao.TABLE_NAME,InscricaoContract.Inscricao.COLUMN_NAME_ID_PARTICIPANTE  + " = ? AND "
                         + InscricaoContract.Inscricao.COLUMN_NAME_ID_EVENTO + " = ?",new String[] { Integer.toString(itemId), Integer.toString(id) });
                 Toast.makeText( CadastrarPartEventActivity.this,"Inscrição no evento removida", Toast.LENGTH_SHORT).show();
-                CadastrarPartEventActivity.this.recreate();
+                adapterPart.notifyItemRemoved(lstPartCadastradosEvento.getChildLayoutPosition(particView));
+                adapterPart.setCursor(InscricaoContract.getParticipantesEventoCursor(db, id));
             }
         });
         lstPartCadastradosEvento.setAdapter(adapterPart);

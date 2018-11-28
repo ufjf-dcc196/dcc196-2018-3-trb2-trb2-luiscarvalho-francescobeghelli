@@ -113,7 +113,9 @@ public class MainActivity extends AppCompatActivity {
                 db.delete(EventoContract.Evento.TABLE_NAME,EventoContract.Evento._ID  + " = ? "
                         ,new String[] { Integer.toString(itemId)});
                 Toast.makeText( MainActivity.this,"Evento removido com sucesso.", Toast.LENGTH_SHORT).show();
-                MainActivity.this.recreate();
+
+                adapterEvent.notifyItemRemoved(lstEventos.getChildLayoutPosition(eventoView));
+                adapterEvent.setCursor(EventoContract.getEventoCursor(db, null, null));
             }
         });
         lstEventos.setLayoutManager(new LinearLayoutManager(this));
@@ -130,12 +132,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(i, REQUEST_DETAILS_PERSON);
             }
         });
-        adapterPart.setOnParticLongClickListener(new ParticipanteAdapter.OnParticLongClickListener() {
-            @Override
-            public void onParticLongClick(View particView, int position) {
-                // não faz nada
-            }
-        });
 
         adapterPart.setOnParticLongClickListener(new ParticipanteAdapter.OnParticLongClickListener() {
             @Override
@@ -145,7 +141,8 @@ public class MainActivity extends AppCompatActivity {
                 db.delete(ParticipanteContract.Participante.TABLE_NAME,ParticipanteContract.Participante._ID  + " = ? "
                         ,new String[] { Integer.toString(itemId)});
                 Toast.makeText( MainActivity.this,"Participante removido com sucesso", Toast.LENGTH_SHORT).show();
-                MainActivity.this.recreate();
+                adapterPart.notifyItemRemoved(lstParticipantes.getChildLayoutPosition(particView));
+                adapterPart.setCursor(ParticipanteContract.getParticipanteCursor(db, null, null));
             }
         });
         lstParticipantes.setLayoutManager(new LinearLayoutManager(this));

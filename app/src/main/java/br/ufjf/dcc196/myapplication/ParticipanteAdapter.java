@@ -37,6 +37,11 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
         this.longListener = longListener;
     }
 
+    public void setCursor(Cursor c)
+    {
+        cursor = c;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
