@@ -49,25 +49,7 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
         id = bundle.getInt("id");
 
         listEventosPart = (RecyclerView) findViewById(R.id.lstEventosParticipante);
-        adapterPart = new EventoAdapter(InscricaoContract.getEventosQueParticipaCursor(db, id));
-        adapterPart.setOnEventoClickListener(new EventoAdapter.OnEventoClickListener() {
-            @Override
-            public void onEventoClick(View eventoView, int itemId) {
-                //Não faz nada
-            }
-        });
-        adapterPart.setOnEventoLongClickListener(new EventoAdapter.OnEventoLongClickListener() {
-            @Override
-            public void onEventoLongClick(View eventoView, int itemId) {
-                db.delete(InscricaoContract.Inscricao.TABLE_NAME,InscricaoContract.Inscricao.COLUMN_NAME_ID_PARTICIPANTE  + " = ? AND "
-                        + InscricaoContract.Inscricao.COLUMN_NAME_ID_EVENTO + " = ?",new String[] { Integer.toString(id), Integer.toString(itemId) });
-                Toast.makeText( ParticipanteDetailsActivity.this,"Inscrição no evento removida", Toast.LENGTH_SHORT).show();
-                ParticipanteDetailsActivity.this.recreate();
-            }
-        });
-        listEventosPart.setAdapter(adapterPart);
-        listEventosPart.setLayoutManager(new LinearLayoutManager(this));
-
+        fillAdapter();
 
         Cursor cursor = ParticipanteContract.getParticipanteCursor(db,ParticipanteContract.Participante._ID+" = ?",new String[] {Integer.toString(id)});
         int idxNome = cursor.getColumnIndexOrThrow(ParticipanteContract.Participante.COLUMN_NAME_NOME);
@@ -90,13 +72,6 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
             }
         });
 
-        btnEdtPart.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                return false;
-            }
-        });
-
         btnCadEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,15 +80,6 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
                 startActivityForResult(i, REQUEST_ADD_INSCRICAO);
             }
         });
-
-        btnCadEvent.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                return false;
-            }
-        });
-
-
     }
 
     @Override
@@ -126,8 +92,24 @@ public class ParticipanteDetailsActivity extends AppCompatActivity {
             txtEmail.setText(bundle.getString("email"));
         }
         else if(requestCode == REQUEST_ADD_INSCRICAO && resultCode == Activity.RESULT_OK){
-            adapterPart = new EventoAdapter(InscricaoContract.getEventosQueParticipaCursor(db,id));
-            listEventosPart.swapAdapter(adapterPart,false);
+            fillAdapter();
         }
+    }
+
+    private void fillAdapter()
+    {
+        adapterPart = new EventoAdapter(InscricaoContract.getEventosQueParticipaCursor(db, id));
+        adapterPart.setOnEventoLongClickListener(new EventoAdapter.OnEventoLongClickListener() {
+            @Override
+            public void onEventoLongClick(View eventoView, int itemId) {
+                db.delete(InscricaoContract.Inscricao.TABLE_NAME,InscricaoContract.Inscricao.COLUMN_NAME_ID_PARTICIPANTE  + " = ? AND "
+                        + InscricaoContract.Inscricao.COLUMN_NAME_ID_EVENTO + " = ?",new String[] { Integer.toString(id), Integer.toString(itemId) });
+                Toast.makeText( ParticipanteDetailsActivity.this,"Inscrição no evento removida", Toast.LENGTH_SHORT).show();
+                ParticipanteDetailsActivity.this.recreate();
+            }
+        });
+        listEventosPart.setAdapter(adapterPart);
+        listEventosPart.setLayoutManager(new LinearLayoutManager(this));
+        listEventosPart.swapAdapter(adapterPart,false);
     }
 }

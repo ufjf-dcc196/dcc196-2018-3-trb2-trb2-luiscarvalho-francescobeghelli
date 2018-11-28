@@ -48,12 +48,6 @@ public class CadastrarPartEventActivity extends AppCompatActivity {
 
         lstPartCadastradosEvento = (RecyclerView)findViewById(R.id.lstPartCadastradosEvento);
         adapterPart = new ParticipanteAdapter(InscricaoContract.getParticipantesEventoCursor(db, id));
-        adapterPart.setOnParticClickListener(new ParticipanteAdapter.OnParticClickListener() {
-            @Override
-            public void onParticClick(View particView, int position) {
-                // não faz nada
-            }
-        });
         adapterPart.setOnParticLongClickListener(new ParticipanteAdapter.OnParticLongClickListener() {
             @Override
             public void onParticLongClick(View particView, int itemId) {
@@ -93,14 +87,6 @@ public class CadastrarPartEventActivity extends AppCompatActivity {
                 startActivityForResult(i, REQUEST_UPDATE_EVENT);
             }
         });
-        btnEditarEvento.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                return false;
-            }
-        });
-
-
     }
 
     @Override

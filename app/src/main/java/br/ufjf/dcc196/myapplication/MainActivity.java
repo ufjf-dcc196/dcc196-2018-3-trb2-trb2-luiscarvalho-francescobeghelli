@@ -77,52 +77,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         lstParticipantes = (RecyclerView)findViewById(R.id.lstParticipantes);
-        adapterPart = new ParticipanteAdapter(ParticipanteContract.getParticipanteCursor(db, null, null));
-        lstParticipantes.setAdapter(adapterPart);
-        lstParticipantes.setLayoutManager(new LinearLayoutManager(this));
-
-        adapterPart.setOnParticClickListener(new ParticipanteAdapter.OnParticClickListener() {
-            @Override
-            public void onParticClick(View particView, int itemId) {
-                Intent i = new Intent(MainActivity.this, ParticipanteDetailsActivity.class);
-                i.putExtra("id", itemId);
-                startActivityForResult(i, REQUEST_DETAILS_PERSON);
-            }
-        });
-
-        adapterPart.setOnParticLongClickListener(new ParticipanteAdapter.OnParticLongClickListener() {
-            @Override
-            public void onParticLongClick(View particView, int itemId) {
-                db.delete(ParticipanteContract.Participante.TABLE_NAME,ParticipanteContract.Participante._ID  + " = ? "
-                        ,new String[] { Integer.toString(itemId)});
-                Toast.makeText( MainActivity.this,"Inscrição no evento removida", Toast.LENGTH_SHORT).show();
-                MainActivity.this.recreate();
-            }
-        });
+        handleParticipanteCad();
 
         lstEventos = (RecyclerView)findViewById(R.id.lstEventos);
-        adapterEvent = new EventoAdapter(EventoContract.getEventoCursor(db, null, null));
-        lstEventos.setAdapter(adapterEvent);
-        lstEventos.setLayoutManager(new LinearLayoutManager(this));
-        adapterEvent.setOnEventoClickListener(new EventoAdapter.OnEventoClickListener() {
-            @Override
-            public void onEventoClick(View eventoView, int itemId) {
-                Intent i = new Intent(MainActivity.this, CadastrarPartEventActivity.class);
-                i.putExtra("id", itemId);
-                startActivityForResult(i, REQUEST_DETAILS_EVENT);
-            }
-        });
-        adapterEvent.setOnEventoLongClickListener(new EventoAdapter.OnEventoLongClickListener() {
-            @Override
-            public void onEventoLongClick(View eventoView, int itemId) {
-                Intent i = new Intent(MainActivity.this, ParticipanteDetailsActivity.class);
-                i.putExtra("id", itemId);
-                db.delete(EventoContract.Evento.TABLE_NAME,EventoContract.Evento._ID  + " = ? "
-                        ,new String[] { Integer.toString(itemId)});
-                Toast.makeText( MainActivity.this,"Inscrição no evento removida", Toast.LENGTH_SHORT).show();
-                MainActivity.this.recreate();
-            }
-        });
+        handleEventoCad();
     }
 
     @Override
@@ -150,10 +108,15 @@ public class MainActivity extends AppCompatActivity {
         adapterEvent.setOnEventoLongClickListener(new EventoAdapter.OnEventoLongClickListener() {
             @Override
             public void onEventoLongClick(View eventoView, int itemId) {
-                // não faz nada
+                db.delete(InscricaoContract.Inscricao.TABLE_NAME,InscricaoContract.Inscricao.COLUMN_NAME_ID_EVENTO + " = ? "
+                        ,new String[] { Integer.toString(itemId)});
+                db.delete(EventoContract.Evento.TABLE_NAME,EventoContract.Evento._ID  + " = ? "
+                        ,new String[] { Integer.toString(itemId)});
+                Toast.makeText( MainActivity.this,"Evento removido com sucesso.", Toast.LENGTH_SHORT).show();
+                MainActivity.this.recreate();
             }
         });
-
+        lstEventos.setLayoutManager(new LinearLayoutManager(this));
         lstEventos.swapAdapter(adapterEvent, false);
     }
 
@@ -174,6 +137,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        adapterPart.setOnParticLongClickListener(new ParticipanteAdapter.OnParticLongClickListener() {
+            @Override
+            public void onParticLongClick(View particView, int itemId) {
+                db.delete(InscricaoContract.Inscricao.TABLE_NAME,InscricaoContract.Inscricao.COLUMN_NAME_ID_PARTICIPANTE + " = ? "
+                        ,new String[] { Integer.toString(itemId)});
+                db.delete(ParticipanteContract.Participante.TABLE_NAME,ParticipanteContract.Participante._ID  + " = ? "
+                        ,new String[] { Integer.toString(itemId)});
+                Toast.makeText( MainActivity.this,"Participante removido com sucesso", Toast.LENGTH_SHORT).show();
+                MainActivity.this.recreate();
+            }
+        });
+        lstParticipantes.setLayoutManager(new LinearLayoutManager(this));
         lstParticipantes.swapAdapter(adapterPart, false);
     }
 }
